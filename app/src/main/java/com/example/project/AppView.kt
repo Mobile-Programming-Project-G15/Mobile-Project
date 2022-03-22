@@ -66,11 +66,13 @@ fun HomeView(bookVM: BookViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFF64BCDF))
+        .height(400.dp),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         bookVM.books.value.forEach {
             Text(text = it)
         }
-
         Spacer(modifier = Modifier.height(10.dp))
 
     }
