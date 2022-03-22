@@ -22,13 +22,15 @@ import androidx.navigation.compose.rememberNavController
 
 const val HOME_ROUTE = "home"
 const val NOTE_ROUTE = "note"
+const val LOGIN_ROUTE = "login"
+const val SIGNUP_ROUTE = "signup"
 
 @Composable
 fun MainView() {
     val userVM = viewModel<UserViewModel>()
 
     if(userVM.username.value.isEmpty()) {
-        LoginView(userVM)
+        StartView()
     } else {
         MainScaffoldView()
     }
@@ -69,7 +71,7 @@ fun HomeView(noteVM: NoteViewModel) {
             Text(text = it.message)
         }
         Spacer(modifier = Modifier.height(10.dp))
-        //Get data from firestore and display here for each user!
+
     }
 
 }
@@ -144,14 +146,22 @@ fun TopBarView() {
     }
 }
 
+@Composable
+fun StartView() {
+    val userVM = viewModel<UserViewModel>()
+
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = LOGIN_ROUTE) {
+        composable( route = LOGIN_ROUTE ){ LoginView(userVM, navController = navController) }
+        composable( route = SIGNUP_ROUTE ){ SignupView(userVM, navController = navController) }
+    }
+}
 
 @Composable
-fun LoginView(userVM: UserViewModel) {
+fun SignupView(userVM: UserViewModel, navController: NavHostController) {
     var emailRegister by remember { mutableStateOf("") }
     var pwRegister by remember { mutableStateOf("") }
-
-    var emailLogin by remember { mutableStateOf("") }
-    var pwLogin by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -168,11 +178,32 @@ fun LoginView(userVM: UserViewModel) {
             value = pwRegister,
             onValueChange = { pwRegister = it },
             label = { Text(text = "Password") },
-            visualTransformation = PasswordVisualTransformation())
-        Button(onClick = { userVM.createUser(emailRegister, pwRegister)}, modifier = Modifier.clip(
-            RoundedCornerShape(50))){
+            visualTransformation = PasswordVisualTransformation()
+        )
+        Button(
+            onClick = { userVM.createUser(emailRegister, pwRegister) }, modifier = Modifier.clip(
+                RoundedCornerShape(50)
+            )
+        ) {
             Text(text = "Register")
         }
+        Text(text = "Back to the login", modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)}))
+    }
+}
+
+@Composable
+fun LoginView(userVM: UserViewModel, navController: NavHostController) {
+
+    var emailLogin by remember { mutableStateOf("") }
+    var pwLogin by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(500.dp),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         TextField(
             value = emailLogin,
             onValueChange = { emailLogin = it },
@@ -186,5 +217,7 @@ fun LoginView(userVM: UserViewModel) {
             RoundedCornerShape(50))) {
             Text(text = "Login")
         }
+        Text(text= "Please signup, if you do not already have an account.")
+        Text(text = "Sign up", modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)}))
     }
 }
