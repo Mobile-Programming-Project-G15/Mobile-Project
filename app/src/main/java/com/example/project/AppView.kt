@@ -9,9 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -44,8 +46,7 @@ fun MainScaffoldView() {
     Scaffold(
         topBar = { TopBarView() },
         bottomBar = { BottomBarView(navController) },
-        content = { MainContentView(navController) }
-    )
+        content = { MainContentView(navController) })
 }
 
 @Composable
@@ -134,7 +135,7 @@ fun TopBarView() {
 
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(Color(0xFF7CCEEE))
+        .background(Color(0xFFD50000))
         .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -158,6 +159,7 @@ fun StartView() {
     }
 }
 
+
 @Composable
 fun SignupView(userVM: UserViewModel, navController: NavHostController) {
     var emailRegister by remember { mutableStateOf("") }
@@ -166,28 +168,38 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(500.dp),
+            .height(400.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TextField(
+        OutlinedTextField(
             value = emailRegister,
             onValueChange = { emailRegister = it },
-            label = { Text(text = "Email") })
-        TextField(
+            label = { Text(text = "Email") },
+            shape = RoundedCornerShape(50)
+        )
+        OutlinedTextField(
             value = pwRegister,
             onValueChange = { pwRegister = it },
             label = { Text(text = "Password") },
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            shape = RoundedCornerShape(50),
+
         )
         Button(
-            onClick = { userVM.createUser(emailRegister, pwRegister) }, modifier = Modifier.clip(
+            onClick = { userVM.createUser(emailRegister, pwRegister)},
+            modifier = Modifier.clip(
                 RoundedCornerShape(50)
             )
         ) {
-            Text(text = "Register")
+            Text(text = "Register", modifier = Modifier.padding(6.dp))
+
+
         }
-        Text(text = "Back to the login", modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)}))
+
+        Text(text = "Already have an account? Sign in",
+            modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)})
+        )
     }
 }
 
@@ -200,24 +212,31 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(500.dp),
+            .height(400.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TextField(
+        OutlinedTextField(
             value = emailLogin,
             onValueChange = { emailLogin = it },
-            label = { Text(text = "Email") })
-        TextField(
+            label = { Text(text = "Email") },
+            shape = RoundedCornerShape(50))
+        OutlinedTextField(
             value = pwLogin,
             onValueChange = { pwLogin = it },
             label = { Text(text = "Password") },
-            visualTransformation = PasswordVisualTransformation())
+            visualTransformation = PasswordVisualTransformation(),
+            shape = RoundedCornerShape(50)
+        )
         Button(onClick = { userVM.loginUser(emailLogin, pwLogin)}, modifier = Modifier.clip(
-            RoundedCornerShape(50))) {
-            Text(text = "Login")
+            RoundedCornerShape(36.dp))
+        ) {
+            Text(text = "Login", modifier = Modifier.padding(6.dp))
         }
-        Text(text= "Please signup, if you do not already have an account.")
-        Text(text = "Sign up", modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)}))
+        Text(text = "Don't have an account? Sign up",
+            modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)})
+
+        )
+
     }
 }
