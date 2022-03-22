@@ -3,10 +3,12 @@ package com.example.project
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -158,28 +160,30 @@ fun LoginView(userVM: UserViewModel) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OutlinedTextField(
+        TextField(
             value = emailRegister,
             onValueChange = { emailRegister = it },
             label = { Text(text = "Email") })
-        OutlinedTextField(
+        TextField(
             value = pwRegister,
             onValueChange = { pwRegister = it },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation())
-        OutlinedButton(onClick = { userVM.createUser(emailRegister, pwRegister)}) {
+        Button(onClick = { userVM.createUser(emailRegister, pwRegister)}, modifier = Modifier.clip(
+            RoundedCornerShape(50))){
             Text(text = "Register")
         }
-        OutlinedTextField(
+        TextField(
             value = emailLogin,
             onValueChange = { emailLogin = it },
             label = { Text(text = "Email") })
-        OutlinedTextField(
+        TextField(
             value = pwLogin,
             onValueChange = { pwLogin = it },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation())
-        OutlinedButton(onClick = { userVM.loginUser(emailLogin, pwLogin)}) {
+        Button(onClick = { userVM.loginUser(emailLogin, pwLogin)}, modifier = Modifier.clip(
+            RoundedCornerShape(50))) {
             Text(text = "Login")
         }
     }
