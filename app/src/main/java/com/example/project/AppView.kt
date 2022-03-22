@@ -52,29 +52,28 @@ fun MainScaffoldView() {
 @Composable
 fun MainContentView(navController: NavHostController) {
     val noteVM = viewModel<NoteViewModel>()
+    val bookVM = viewModel<BookViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ HomeView(noteVM) }
+        composable( route = HOME_ROUTE ){ HomeView(bookVM) }
         composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
     }
 }
 
 @Composable
-fun HomeView(noteVM: NoteViewModel) {
-    var note by remember {mutableStateOf("")}
+fun HomeView(bookVM: BookViewModel) {
 
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFF64BCDF))
     ){
-        noteVM.notes.value.forEach {
-            Divider(thickness = 2.dp)
-            Text(text = it.message)
+        bookVM.books.value.forEach {
+            Text(text = it)
         }
+
         Spacer(modifier = Modifier.height(10.dp))
 
     }
-
 }
 
 @Composable
