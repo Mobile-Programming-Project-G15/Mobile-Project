@@ -1,9 +1,12 @@
 package com.example.project
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,8 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,6 +28,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.project.ui.theme.RedA700
 
 
 const val HOME_ROUTE = "home"
@@ -121,7 +130,7 @@ fun NoteView(noteVM: NoteViewModel) {
 fun BottomBarView(navController: NavHostController) {
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(Color(0xFF7CCEEE)),
+        .background(Color(0xFFD50000)),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -211,11 +220,22 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
 
         }
 
-        Text(text = "Already have an account? Sign in",
-            modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)})
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Already have an account? ")
+            Text(text = "Sign in", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)}))
+        }
+
     }
 }
+
+
+@Composable
+fun SPRLogo() {
+    val image: Painter = painterResource(id = R.drawable.composelogo)
+    Image(painter = image,contentDescription = "Default logo",
+    modifier = Modifier.width(250.dp))
+}
+
 
 @Composable
 fun LoginView(userVM: UserViewModel, navController: NavHostController) {
@@ -226,31 +246,38 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(400.dp),
+            .height(500.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        SPRLogo()
+
         OutlinedTextField(
             value = emailLogin,
             onValueChange = { emailLogin = it },
             label = { Text(text = "Email") },
-            shape = RoundedCornerShape(50))
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(6.dp))
         OutlinedTextField(
             value = pwLogin,
             onValueChange = { pwLogin = it },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation(),
-            shape = RoundedCornerShape(50)
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(6.dp)
         )
         Button(onClick = { userVM.loginUser(emailLogin, pwLogin)}, modifier = Modifier.clip(
             RoundedCornerShape(36.dp))
         ) {
-            Text(text = "Login", modifier = Modifier.padding(6.dp))
+            Text(text = "Login", modifier = Modifier.padding(6.dp),)
         }
-        Text(text = "Don't have an account? Sign up",
-            modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)})
 
-        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Don't have an account? ")
+            Text(text = "Sign up", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)}))
+
+        }
 
     }
 }
