@@ -17,7 +17,7 @@ class BookViewModel: ViewModel() {
                 } else if(value != null && !value.isEmpty) {
                     val bookList = mutableListOf<String>()
                     for(d in value.documents) {
-                        bookList.add( d.get("name").toString() + ", " + d.get("authur").toString() )
+                        bookList.add( d.get("name").toString() + ", " + d.get("author").toString() )
 
                     }
                     books.value = bookList
