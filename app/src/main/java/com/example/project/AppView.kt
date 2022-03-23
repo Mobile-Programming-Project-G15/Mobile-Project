@@ -26,6 +26,7 @@ const val HOME_ROUTE = "home"
 const val NOTE_ROUTE = "note"
 const val LOGIN_ROUTE = "login"
 const val SIGNUP_ROUTE = "signup"
+const val RESERVATION_ROUTE = "reservation"
 
 @Composable
 fun MainView() {
@@ -57,6 +58,8 @@ fun MainContentView(navController: NavHostController) {
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
         composable( route = HOME_ROUTE ){ HomeView(bookVM) }
         composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
+        composable( route = RESERVATION_ROUTE ){ ReservationView() }
+
     }
 }
 
@@ -76,6 +79,11 @@ fun HomeView(bookVM: BookViewModel) {
         Spacer(modifier = Modifier.height(10.dp))
 
     }
+}
+
+@Composable
+fun ReservationView() {
+    Text(text = "this is reservation view ")
 }
 
 @Composable
@@ -121,6 +129,11 @@ fun BottomBarView(navController: NavHostController) {
             painter = painterResource(id = R.drawable.ic_home),
             contentDescription = "home",
             modifier = Modifier.clickable { navController.navigate(HOME_ROUTE)}
+        )
+        Icon(
+            painter = painterResource(id = R.drawable.ic_reserved),
+            contentDescription = "reservation",
+            modifier = Modifier.clickable { navController.navigate(RESERVATION_ROUTE)}
         )
         Icon(
             painter = painterResource(id = R.drawable.ic_grocery),
