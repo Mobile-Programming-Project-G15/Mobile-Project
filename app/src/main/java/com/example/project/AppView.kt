@@ -1,27 +1,19 @@
 package com.example.project
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -84,8 +76,13 @@ fun HomeView(bookVM: BookViewModel) {
     ){
         bookVM.books.value.forEach {
             Text(text = it)
+            Button(onClick = { /* To Do */ }, modifier = Modifier.clip(
+                RoundedCornerShape(36.dp))
+            ) {
+                Text(text = "Add To Reservation", modifier = Modifier.padding(6.dp),)
+            }
+            Spacer(modifier = Modifier.height(30.dp))
         }
-        Spacer(modifier = Modifier.height(10.dp))
 
     }
 }

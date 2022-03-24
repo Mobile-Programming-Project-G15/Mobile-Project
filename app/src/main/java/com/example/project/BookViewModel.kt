@@ -13,11 +13,14 @@ class BookViewModel: ViewModel() {
             .collection("books")
             .addSnapshotListener { value, error ->
                 if(error != null) {
-                    // Error info here
+                    // Error
                 } else if(value != null && !value.isEmpty) {
                     val bookList = mutableListOf<String>()
                     for(d in value.documents) {
-                        bookList.add( d.get("name").toString() + ", " + d.get("author").toString() )
+                        bookList.add(
+                            /* d.get("image").toString() + "  " + */
+                            d.get("name").toString() + ", " +
+                            d.get("author").toString() )
 
                     }
                     books.value = bookList
