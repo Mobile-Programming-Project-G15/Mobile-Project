@@ -76,6 +76,7 @@ fun HomeView(bookVM: BookViewModel) {
     ){
         bookVM.books.value.forEach {
             Text(text = it)
+            /* it.image */
             Button(onClick = { /* To Do */ }, modifier = Modifier.clip(
                 RoundedCornerShape(36.dp))
             ) {

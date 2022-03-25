@@ -18,7 +18,7 @@ class BookViewModel: ViewModel() {
                     val bookList = mutableListOf<String>()
                     for(d in value.documents) {
                         bookList.add(
-                            /* d.get("image").toString() + "  " + */
+                            d.get("image") + "  " +
                             d.get("name").toString() + ", " +
                             d.get("author").toString() )
 
