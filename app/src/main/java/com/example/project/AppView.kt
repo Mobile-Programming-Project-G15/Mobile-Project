@@ -15,11 +15,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.project.ui.theme.RedA700
 
 
@@ -76,8 +78,10 @@ fun HomeView(bookVM: BookViewModel) {
     ){
         bookVM.books.value.forEach {
             Text(text = it)
-            /* it.image */
-            Button(onClick = { /* To Do */ }, modifier = Modifier.clip(
+            AsyncImage(model = "it.image", contentDescription = null)
+            Text(text = it.name.toString())
+            Text(text = it.author)
+            Button(onClick = { /* To AddReservation() Do */ }, modifier = Modifier.clip(
                 RoundedCornerShape(36.dp))
             ) {
                 Text(text = "Add To Reservation", modifier = Modifier.padding(6.dp),)
