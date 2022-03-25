@@ -1,8 +1,6 @@
 package com.example.project
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -15,11 +13,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.project.ui.theme.RedA700
 
 
@@ -66,18 +66,21 @@ fun MainContentView(navController: NavHostController) {
 
 @Composable
 fun HomeView(bookVM: BookViewModel) {
+    /*var book by remember {mutableStateOf("")}*/
 
     Column(modifier = Modifier
+        /*.verticalScroll(rememberScrollState())*/
         .fillMaxSize()
         .background(Color(0xFF64BCDF))
         .height(400.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        bookVM.books.value.forEach {
-            Text(text = it)
-            /* it.image */
-            Button(onClick = { /* To Do */ }, modifier = Modifier.clip(
+        bookVM.books.forEach {
+            AsyncImage(model = it.image, contentDescription = "")
+            Text(text = it.name, color= Color.Black)
+            Text(text = it.author, color= Color.Black)
+            Button(onClick = {  /*bookVM.addReservation(Book(book))*/ }, modifier = Modifier.clip(
                 RoundedCornerShape(36.dp))
             ) {
                 Text(text = "Add To Reservation", modifier = Modifier.padding(6.dp),)
