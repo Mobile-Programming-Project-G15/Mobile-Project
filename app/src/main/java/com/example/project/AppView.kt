@@ -1,8 +1,6 @@
 package com.example.project
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -68,20 +66,21 @@ fun MainContentView(navController: NavHostController) {
 
 @Composable
 fun HomeView(bookVM: BookViewModel) {
+    /*var book by remember {mutableStateOf("")}*/
 
     Column(modifier = Modifier
+        /*.verticalScroll(rememberScrollState())*/
         .fillMaxSize()
         .background(Color(0xFF64BCDF))
         .height(400.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        bookVM.books.value.forEach {
-            Text(text = it)
-            AsyncImage(model = "it.image", contentDescription = null)
-            Text(text = it.name.toString())
-            Text(text = it.author)
-            Button(onClick = { /* To AddReservation() Do */ }, modifier = Modifier.clip(
+        bookVM.books.forEach {
+            AsyncImage(model = it.image, contentDescription = "")
+            Text(text = it.name, color= Color.Black)
+            Text(text = it.author, color= Color.Black)
+            Button(onClick = {  /*bookVM.addReservation(Book(book))*/ }, modifier = Modifier.clip(
                 RoundedCornerShape(36.dp))
             ) {
                 Text(text = "Add To Reservation", modifier = Modifier.padding(6.dp),)
