@@ -69,10 +69,8 @@ fun HomeView(bookVM: BookViewModel) {
     /*var book by remember {mutableStateOf("")}*/
 
     Column(modifier = Modifier
-        /*.verticalScroll(rememberScrollState())*/
-        .fillMaxSize()
-        .background(Color(0xFF64BCDF))
-        .height(400.dp),
+        .verticalScroll(rememberScrollState())
+        .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
