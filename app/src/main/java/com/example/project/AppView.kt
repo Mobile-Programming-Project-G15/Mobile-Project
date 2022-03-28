@@ -6,14 +6,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -66,27 +67,46 @@ fun MainContentView(navController: NavHostController) {
 
 @Composable
 fun HomeView(bookVM: BookViewModel) {
-    /*var book by remember {mutableStateOf("")}*/
-
-    Column(modifier = Modifier
-        .verticalScroll(rememberScrollState())
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        bookVM.books.forEach {
-            AsyncImage(model = it.image, contentDescription = "")
-            Text(text = it.name, color= Color.Black)
-            Text(text = it.author, color= Color.Black)
-            Button(onClick = {  /*bookVM.addReservation(Book(book))*/ }, modifier = Modifier.clip(
-                RoundedCornerShape(36.dp))
-            ) {
-                Text(text = "Add To Reservation", modifier = Modifier.padding(6.dp),)
+        Column(
+            modifier = Modifier
+                .padding(15.dp)
+                .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = CenterHorizontally
+        ) {
+            bookVM.books.forEach {
+                Column(modifier = Modifier
+                    .padding(18.dp),
+                    horizontalAlignment = CenterHorizontally,
+                    ) {
+                    Card(
+                        elevation = 8.dp,
+                    ) {
+                        Column(horizontalAlignment = CenterHorizontally) {
+                            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                                .padding(12.dp)
+                                .width(80.dp)
+                            )
+                            Column(horizontalAlignment = CenterHorizontally) {
+                                Text(text = it.name, color = Color.Black)
+                                Text(text = it.author, color= Color.Black)
+                            }
+                            Button(
+                                onClick = {},
+                                shape = RoundedCornerShape(36.dp),
+                                modifier = Modifier.padding(12.dp),
+                            ) {
+                                Text(
+                                    text = "Add to reservations",
+                                    modifier = Modifier.padding(6.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(30.dp))
             }
-            Spacer(modifier = Modifier.height(30.dp))
         }
-
-    }
 }
 
 @Composable
@@ -269,7 +289,7 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
         Button(onClick = { userVM.loginUser(emailLogin, pwLogin)}, modifier = Modifier.clip(
             RoundedCornerShape(36.dp))
         ) {
-            Text(text = "Login", modifier = Modifier.padding(6.dp),)
+            Text(text = "Login", modifier = Modifier.padding(6.dp))
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
