@@ -76,11 +76,11 @@ fun HomeView(bookVM: BookViewModel) {
             modifier = Modifier
                 .padding(15.dp)
                 .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = CenterHorizontally
-        ) {
-            bookVM.books.forEach {
-                Column(modifier = Modifier
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                    horizontalAlignment = CenterHorizontally
+                ) {
+                    bookVM.books.forEach {
+                        Column(modifier = Modifier
                     .padding(18.dp),
                     horizontalAlignment = CenterHorizontally,
                     ) {
@@ -126,43 +126,63 @@ fun ReservationView(bookVM: BookViewModel) {
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = CenterHorizontally
-    ) {
-        bookVM.reservedBooks.forEach {
-            Column(modifier = Modifier
-                .padding(18.dp),
-                horizontalAlignment = CenterHorizontally,
-            ) {
-                Card(
-                    elevation = 8.dp,
+    )
+    {
+        if(bookVM.reservedBooks.isEmpty()) {
+            Text ( text = "Your Reservation List is empty")
+        } else {
+            bookVM.reservedBooks.forEach {
+                Column(modifier = Modifier
+                    .padding(18.dp),
+                    horizontalAlignment = CenterHorizontally,
                 ) {
-                    Column(horizontalAlignment = CenterHorizontally) {
-                        AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                            .padding(12.dp)
-                            .width(80.dp)
-                        )
+                    Card(
+                        elevation = 8.dp,
+                    ) {
                         Column(horizontalAlignment = CenterHorizontally) {
-                            Text(text = it.name, color = Color.Black)
-                            Text(text = it.author, color= Color.Black)
-                        }
-                        Button(
-                            onClick = {
-                                bookVM.deleteReservation(Book(
-                                    name = "", author = "", image = ""
-                                ))
-                            },
-                            shape = RoundedCornerShape(36.dp),
-                            modifier = Modifier.padding(12.dp),
-                        ) {
-                            Text(
-                                text = "Delete",
-                                modifier = Modifier.padding(6.dp)
+                            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                                .padding(12.dp)
+                                .width(80.dp)
                             )
+                            Column(horizontalAlignment = CenterHorizontally) {
+                                Text(text = it.name, color = Color.Black)
+                                Text(text = it.author, color= Color.Black)
+                            }
+                            Button(
+                                onClick = {
+                                    bookVM.deleteReservation(Book(
+                                        image = "", name = "", author = ""
+                                    ))
+                                },
+                                shape = RoundedCornerShape(36.dp),
+                                modifier = Modifier.padding(12.dp),
+                            ) {
+                                Text(
+                                    text = "Delete",
+                                    modifier = Modifier.padding(6.dp)
+                                )
+                            }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(30.dp))
             }
-            Spacer(modifier = Modifier.height(30.dp))
+            Button(
+                onClick = {
+                    bookVM.confirmReservation(Book(
+                        image = "", name = "", author = ""
+                    ))
+                },
+                shape = RoundedCornerShape(36.dp),
+                modifier = Modifier.padding(12.dp),
+            ) {
+                Text(
+                    text = "Confirm Reservation",
+                    modifier = Modifier.padding(6.dp)
+                )
+            }
         }
+
     }
 }
 

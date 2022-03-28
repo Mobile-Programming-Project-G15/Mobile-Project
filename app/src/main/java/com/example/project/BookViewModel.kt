@@ -35,4 +35,8 @@ class BookViewModel: ViewModel() {
     reservedBooks.remove(book)
 
     }
+
+    fun confirmReservation(book:Book) {
+        //delete all items from the reservation list
+    }
 }
