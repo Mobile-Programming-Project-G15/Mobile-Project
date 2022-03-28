@@ -43,7 +43,12 @@ fun MainView() {
 
 @Composable
 fun MainScaffoldView() {
+    /* var isAdmin by remember { mutableStateOf(false) } */
 
+    /* Checkbox(checked = isAdmin, onCheckChange = { isAdmin = !isAdmin })
+           if( isSaved ) {
+           } else {}
+        */
     val navController = rememberNavController()
 
     Scaffold(
@@ -60,7 +65,7 @@ fun MainContentView(navController: NavHostController) {
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
         composable( route = HOME_ROUTE ){ HomeView(bookVM) }
         composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
-        composable( route = RESERVATION_ROUTE ){ ReservationView() }
+        composable( route = RESERVATION_ROUTE ){ ReservationView(bookVM) }
 
     }
 }
@@ -92,12 +97,16 @@ fun HomeView(bookVM: BookViewModel) {
                                 Text(text = it.author, color= Color.Black)
                             }
                             Button(
-                                onClick = {},
+                                onClick = {
+                                    bookVM.addReservation(Book(
+                                        name = it.name, author = it.author, image = it.image
+                                    ))
+                                },
                                 shape = RoundedCornerShape(36.dp),
                                 modifier = Modifier.padding(12.dp),
                             ) {
                                 Text(
-                                    text = "Add to reservations",
+                                    text = "Add to reservation",
                                     modifier = Modifier.padding(6.dp)
                                 )
                             }
@@ -110,8 +119,51 @@ fun HomeView(bookVM: BookViewModel) {
 }
 
 @Composable
-fun ReservationView() {
-    Text(text = "this is reservation view ")
+fun ReservationView(bookVM: BookViewModel) {
+    Column(
+        modifier = Modifier
+            .padding(15.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = CenterHorizontally
+    ) {
+        bookVM.reservedBooks.forEach {
+            Column(modifier = Modifier
+                .padding(18.dp),
+                horizontalAlignment = CenterHorizontally,
+            ) {
+                Card(
+                    elevation = 8.dp,
+                ) {
+                    Column(horizontalAlignment = CenterHorizontally) {
+                        AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                            .padding(12.dp)
+                            .width(80.dp)
+                        )
+                        Column(horizontalAlignment = CenterHorizontally) {
+                            Text(text = it.name, color = Color.Black)
+                            Text(text = it.author, color= Color.Black)
+                        }
+                        Button(
+                            onClick = {
+                                bookVM.deleteReservation(Book(
+                                    name = "", author = "", image = ""
+                                ))
+                            },
+                            shape = RoundedCornerShape(36.dp),
+                            modifier = Modifier.padding(12.dp),
+                        ) {
+                            Text(
+                                text = "Delete",
+                                modifier = Modifier.padding(6.dp)
+                            )
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+        }
+    }
 }
 
 @Composable

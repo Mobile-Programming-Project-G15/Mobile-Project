@@ -8,6 +8,8 @@ import com.google.firebase.ktx.Firebase
 
 class BookViewModel: ViewModel() {
     var books = mutableStateListOf<Book>()
+    var reservedBooks = mutableStateListOf<Book>()
+    var isReserved = mutableStateOf<Boolean>(false)
 
     init {
         Firebase.firestore
@@ -23,10 +25,14 @@ class BookViewModel: ViewModel() {
             }
     }
 
-  fun addReservation(book: Book) {
-      /*var newNotes = notes.value.toMutableList()
-      newNotes.add(note)
-      notes.value = newNotes*/
+    fun addReservation(book: Book) {
+      isReserved.value = true
+      reservedBooks.add(book)
     }
 
+    fun deleteReservation(book: Book) {
+    isReserved.value = false
+    reservedBooks.remove(book)
+
+    }
 }
