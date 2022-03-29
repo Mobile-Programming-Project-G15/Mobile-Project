@@ -233,7 +233,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                         Button(
                             onClick = {
                                 bookVM.addReservation(Book(
-                                    name = it.name, author = it.author, image = it.image
+                                    name = it.name, author = it.author, image = it.image, description = it.description
                                 ))
                             },
                             modifier= Modifier.size(50.dp),
@@ -294,7 +294,7 @@ fun ReservationView(bookVM: BookViewModel) {
                                      horizontalArrangement = Arrangement.End) {
                                 Button(onClick = {
                                     bookVM.deleteReservation(Book(
-                                        image = "", name = "", author = ""
+                                        image = "", name = "", author = "", description = ""
                                     ))
                                 },
                                     modifier= Modifier.size(50.dp),
@@ -315,7 +315,7 @@ fun ReservationView(bookVM: BookViewModel) {
             Button(
                 onClick = {
                     bookVM.confirmReservation(Book(
-                        image = "", name = "", author = ""
+                        image = "", name = "", author = "", description = ""
                     ))
                 },
                 shape = RoundedCornerShape(36.dp),
@@ -362,6 +362,7 @@ fun NoteView(noteVM: NoteViewModel) {
         Divider(thickness = 2.dp)
     }
 }
+
 
 @Composable
 fun BottomBarView(navController: NavHostController) {

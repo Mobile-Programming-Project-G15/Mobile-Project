@@ -20,7 +20,8 @@ class BookViewModel: ViewModel() {
                     val bookImage = d.get("image").toString()
                     val bookName = d.get("name").toString()
                     val bookAuthor = d.get("author").toString()
-                    books.add(Book(bookName, bookAuthor, bookImage))
+                    val bookDescription = d.get("description").toString()
+                    books.add(Book(bookName, bookAuthor, bookImage,bookDescription))
                 }
             }
     }
