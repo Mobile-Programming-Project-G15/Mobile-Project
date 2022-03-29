@@ -2,19 +2,22 @@ package com.example.project
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -69,52 +72,123 @@ fun MainContentView(navController: NavHostController) {
 
     }
 }
+@Composable
+fun ExpandableCard(title: String, body: String) {
+    var expanded by remember { mutableStateOf(false)}
+
+    Card{
+        Column{
+            Text(text = title)
+            //Content
+            if(expanded) {
+                Text(text = body)
+                IconButton(onClick = {expanded = false}) {
+                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                }
+            } else {
+                IconButton(onClick = {expanded = true}) {
+                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+
+                }
+            }
+        }
+    }
+
+/*
+    Card(modifier = Modifier.fillMaxWidth(),
+        elevation = 8.dp
+    ) {
+        Row(verticalAlignment = CenterVertically) {
+            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                .padding(12.dp)
+                .width(60.dp)
+            )
+            Column(verticalArrangement = Arrangement.Center) {
+                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                horizontalArrangement = Arrangement.End){
+
+                Button(
+                    onClick = {
+                        bookVM.addReservation(Book(
+                            name = it.name, author = it.author, image = it.image
+                        ))
+                    },
+                    modifier= Modifier.size(50.dp),
+                    shape = CircleShape,
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.outline_add_24),
+                        contentDescription = "Add to reservations",
+                        modifier = Modifier .fillMaxWidth() )
+                }
+            }
+        }
+    }
+
+ */
+}
 
 @Composable
 fun HomeView(bookVM: BookViewModel) {
-        Column(
-            modifier = Modifier
-                .padding(15.dp)
-                .verticalScroll(rememberScrollState()),
-                        verticalArrangement = Arrangement.SpaceEvenly,
-                    horizontalAlignment = CenterHorizontally
-                ) {
+    Column(
+        modifier = Modifier
+            .padding(15.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = CenterHorizontally
+
+    ) {
                     bookVM.books.forEach {
                         Column(modifier = Modifier
-                    .padding(18.dp),
-                    horizontalAlignment = CenterHorizontally,
+                            .padding(16.dp, 6.dp, 12.dp, 16.dp),
+                            horizontalAlignment = CenterHorizontally,
+                        ) {
+
+                    Card(modifier = Modifier.fillMaxWidth(),
+                        elevation = 8.dp
                     ) {
-                    Card(
-                        elevation = 8.dp,
-                    ) {
-                        Column(horizontalAlignment = CenterHorizontally) {
+
+                        Row(verticalAlignment = CenterVertically) {
                             AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
                                 .padding(12.dp)
-                                .width(80.dp)
+                                .width(60.dp)
                             )
-                            Column(horizontalAlignment = CenterHorizontally) {
-                                Text(text = it.name, color = Color.Black)
-                                Text(text = it.author, color= Color.Black)
+                            Column(verticalArrangement = Arrangement.Center) {
+                                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
                             }
-                            Button(
-                                onClick = {
-                                    bookVM.addReservation(Book(
-                                        name = it.name, author = it.author, image = it.image
-                                    ))
-                                },
-                                shape = RoundedCornerShape(36.dp),
-                                modifier = Modifier.padding(12.dp),
-                            ) {
-                                Text(
-                                    text = "Add to reservation",
-                                    modifier = Modifier.padding(6.dp)
-                                )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                horizontalArrangement = Arrangement.End){
+
+                                Button(
+                                    onClick = {
+                                        bookVM.addReservation(Book(
+                                            name = it.name, author = it.author, image = it.image
+                                        ))
+                                    },
+                                    modifier= Modifier.size(50.dp),
+                                    shape = CircleShape,
+                                ) {
+                                    Icon(
+                                            painter = painterResource(id = R.drawable.outline_add_24),
+                                            contentDescription = "Add to reservations",
+                                                modifier = Modifier .fillMaxWidth() )
+                                }
                             }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(30.dp))
+
             }
+            Spacer(modifier = Modifier.height(30.dp))
         }
 }
 
@@ -124,7 +198,6 @@ fun ReservationView(bookVM: BookViewModel) {
         modifier = Modifier
             .padding(15.dp)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = CenterHorizontally
     )
     {
@@ -133,39 +206,49 @@ fun ReservationView(bookVM: BookViewModel) {
         } else {
             bookVM.reservedBooks.forEach {
                 Column(modifier = Modifier
-                    .padding(18.dp),
+                    .padding(16.dp, 6.dp, 12.dp, 16.dp),
                     horizontalAlignment = CenterHorizontally,
                 ) {
-                    Card(
+                    Card(modifier = Modifier.fillMaxWidth(),
                         elevation = 8.dp,
+
                     ) {
-                        Column(horizontalAlignment = CenterHorizontally) {
+                        Row(verticalAlignment = CenterVertically) {
                             AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
                                 .padding(12.dp)
-                                .width(80.dp)
+                                .width(60.dp)
                             )
-                            Column(horizontalAlignment = CenterHorizontally) {
-                                Text(text = it.name, color = Color.Black)
-                                Text(text = it.author, color= Color.Black)
+                            Column(
+                                modifier = Modifier,
+                            verticalArrangement = Arrangement.Center,
+                            ) {
+                                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
                             }
-                            Button(
-                                onClick = {
+                            Row(
+                                 modifier = Modifier
+                                     .fillMaxWidth()
+                                     .padding(12.dp),
+                                     horizontalArrangement = Arrangement.End) {
+                                Button(onClick = {
                                     bookVM.deleteReservation(Book(
                                         image = "", name = "", author = ""
                                     ))
                                 },
-                                shape = RoundedCornerShape(36.dp),
-                                modifier = Modifier.padding(12.dp),
-                            ) {
-                                Text(
-                                    text = "Delete",
-                                    modifier = Modifier.padding(6.dp)
-                                )
+                                    modifier= Modifier.size(50.dp),
+                                    shape = CircleShape
+
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.outline_clear_white_18),
+                                        contentDescription = "Delete",
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
                             }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(30.dp))
             }
             Button(
                 onClick = {
@@ -181,10 +264,12 @@ fun ReservationView(bookVM: BookViewModel) {
                     modifier = Modifier.padding(6.dp)
                 )
             }
+            Spacer(modifier = Modifier.height(48.dp))
         }
 
     }
 }
+
 
 @Composable
 fun NoteView(noteVM: NoteViewModel) {
@@ -195,7 +280,6 @@ fun NoteView(noteVM: NoteViewModel) {
         .fillMaxSize()
         .background(Color(0xFF9BD5EB))
         .padding(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ){
         OutlinedTextField(
             value = note,
@@ -223,7 +307,7 @@ fun BottomBarView(navController: NavHostController) {
         .fillMaxWidth()
         .background(Color(0xFFD50000)),
         horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = CenterVertically
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_home),
@@ -252,7 +336,7 @@ fun TopBarView() {
         .background(Color(0xFFD50000))
         .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = CenterVertically
     ) {
         Text(text = userVM.username.value)
         OutlinedButton(onClick = { userVM.logoutUser() }) {
@@ -284,7 +368,6 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
             .fillMaxWidth()
             .height(400.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OutlinedTextField(
             value = emailRegister,
@@ -311,7 +394,7 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
 
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = CenterVertically) {
             Text(text = "Already have an account? ")
             Text(text = "Sign in", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)}))
         }
@@ -336,10 +419,8 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(500.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         SPRLogo()
@@ -364,7 +445,7 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
             Text(text = "Login", modifier = Modifier.padding(6.dp))
         }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = CenterVertically) {
             Text(text = "Don't have an account? ")
             Text(text = "Sign up", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)}))
 
