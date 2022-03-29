@@ -6,16 +6,20 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -66,7 +70,7 @@ fun MainContentView(navController: NavHostController) {
     val bookVM = viewModel<BookViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ HomeView(bookVM) }
+        composable( route = HOME_ROUTE ){ searchAndHome(bookVM) }
         composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
         composable( route = RESERVATION_ROUTE ){ ReservationView(bookVM) }
 
@@ -135,7 +139,65 @@ fun ExpandableCard(title: String, body: String) {
 }
 
 @Composable
-fun HomeView(bookVM: BookViewModel) {
+fun searchAndHome(bookVM: BookViewModel) {
+    val textVal = remember { mutableStateOf(TextFieldValue("")) }
+    Column {
+        search(textVal)
+        HomeView(bookVM, textVal)
+    }
+}
+
+@Composable
+fun search(textVal: MutableState<TextFieldValue>) {
+    TextField(
+        value = textVal.value,
+        onValueChange = { textVal.value = it },
+        modifier = Modifier
+            .fillMaxWidth(),
+        textStyle = TextStyle(Color.Black, fontSize = 18.sp),
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = "Search",
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(24.dp)
+            )
+        },
+        trailingIcon = {
+            if(textVal.value != TextFieldValue("")) {
+                IconButton(
+                    onClick = {
+                        textVal.value = TextFieldValue("")
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "Close",
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .size(24.dp)
+                    )
+                }
+            }
+        },
+        singleLine = true,
+        shape = RectangleShape,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.Black,
+            cursorColor = Color.Black,
+            leadingIconColor = Color.Black,
+            trailingIconColor = Color.Black,
+            backgroundColor = Color.LightGray,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
+    )
+}
+
+@Composable
+fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
     Column(
         modifier = Modifier
             .padding(15.dp)
@@ -143,53 +205,53 @@ fun HomeView(bookVM: BookViewModel) {
         horizontalAlignment = CenterHorizontally
 
     ) {
-                    bookVM.books.forEach {
-                        Column(modifier = Modifier
-                            .padding(16.dp, 6.dp, 12.dp, 16.dp),
-                            horizontalAlignment = CenterHorizontally,
+        bookVM.books.forEach {
+            Column(modifier = Modifier
+                .padding(16.dp, 6.dp, 12.dp, 16.dp),
+                horizontalAlignment = CenterHorizontally,
+            ) {
+
+            Card(modifier = Modifier.fillMaxWidth(),
+                elevation = 8.dp
+            ) {
+
+                Row(verticalAlignment = CenterVertically) {
+                    AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                        .padding(12.dp)
+                        .width(60.dp)
+                    )
+                    Column(verticalArrangement = Arrangement.Center) {
+                        Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                        Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        horizontalArrangement = Arrangement.End){
+
+                        Button(
+                            onClick = {
+                                bookVM.addReservation(Book(
+                                    name = it.name, author = it.author, image = it.image
+                                ))
+                            },
+                            modifier= Modifier.size(50.dp),
+                            shape = CircleShape,
                         ) {
-
-                    Card(modifier = Modifier.fillMaxWidth(),
-                        elevation = 8.dp
-                    ) {
-
-                        Row(verticalAlignment = CenterVertically) {
-                            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                                .padding(12.dp)
-                                .width(60.dp)
-                            )
-                            Column(verticalArrangement = Arrangement.Center) {
-                                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-                            }
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp),
-                                horizontalArrangement = Arrangement.End){
-
-                                Button(
-                                    onClick = {
-                                        bookVM.addReservation(Book(
-                                            name = it.name, author = it.author, image = it.image
-                                        ))
-                                    },
-                                    modifier= Modifier.size(50.dp),
-                                    shape = CircleShape,
-                                ) {
-                                    Icon(
-                                            painter = painterResource(id = R.drawable.outline_add_24),
-                                            contentDescription = "Add to reservations",
-                                                modifier = Modifier .fillMaxWidth() )
-                                }
-                            }
+                            Icon(
+                                    painter = painterResource(id = R.drawable.outline_add_24),
+                                    contentDescription = "Add to reservations",
+                                        modifier = Modifier .fillMaxWidth() )
                         }
                     }
                 }
-
             }
-            Spacer(modifier = Modifier.height(30.dp))
         }
+
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+    }
 }
 
 @Composable
