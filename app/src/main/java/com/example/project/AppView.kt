@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -73,69 +72,84 @@ fun MainContentView(navController: NavHostController) {
     }
 }
 @Composable
-fun ExpandableCard(title: String, body: String) {
+fun ExpandableCard(bookVM: BookViewModel) {
     var expanded by remember { mutableStateOf(false)}
 
     Card{
         Column{
-            Text(text = title)
-            //Content
+            Text(text = "")
+
             if(expanded) {
-                Text(text = body)
+                Text(text = "dd")
                 IconButton(onClick = {expanded = false}) {
                     Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
                 }
+                bookVM.books.forEach {
+                    Column(modifier = Modifier
+                        .padding(16.dp, 6.dp, 12.dp, 16.dp),
+                        horizontalAlignment = CenterHorizontally,
+                    ) {
+
+                        Card(modifier = Modifier.fillMaxWidth(),
+                            elevation = 8.dp
+                        ) {
+
+                            Row(verticalAlignment = CenterVertically) {
+                                AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                                    .padding(12.dp)
+                                    .width(60.dp)
+                                )
+                                Column(verticalArrangement = Arrangement.Center) {
+                                    Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                                    Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                                }
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(12.dp),
+                                    horizontalArrangement = Arrangement.End){
+
+                                    Button(
+                                        onClick = {
+                                            bookVM.addReservation(Book(
+                                                name = it.name, author = it.author, image = it.image
+                                            ))
+                                        },
+                                        modifier= Modifier.size(50.dp),
+                                        shape = CircleShape,
+
+                                        ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.outline_add_24),
+                                            contentDescription = "Add to reservations",
+                                            modifier = Modifier .fillMaxWidth() )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
             } else {
+                Text(text = "dd")
                 IconButton(onClick = {expanded = true}) {
-                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
-
-                }
-            }
-        }
-    }
-
-/*
-    Card(modifier = Modifier.fillMaxWidth(),
-        elevation = 8.dp
-    ) {
-        Row(verticalAlignment = CenterVertically) {
-            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                .padding(12.dp)
-                .width(60.dp)
-            )
-            Column(verticalArrangement = Arrangement.Center) {
-                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.End){
-
-                Button(
-                    onClick = {
-                        bookVM.addReservation(Book(
-                            name = it.name, author = it.author, image = it.image
-                        ))
-                    },
-                    modifier= Modifier.size(50.dp),
-                    shape = CircleShape,
-                ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.outline_add_24),
-                        contentDescription = "Add to reservations",
-                        modifier = Modifier .fillMaxWidth() )
+                        painter = painterResource(id = R.drawable.outline_expand_more_black_18),
+                        contentDescription = "Expand"
+                    )
+                }
+
                 }
             }
         }
     }
 
- */
-}
 
 @Composable
 fun HomeView(bookVM: BookViewModel) {
+    var expanded by remember { mutableStateOf(false)}
+    
     Column(
         modifier = Modifier
             .padding(15.dp)
@@ -161,6 +175,16 @@ fun HomeView(bookVM: BookViewModel) {
                             Column(verticalArrangement = Arrangement.Center) {
                                 Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                                 Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                                if (expanded){
+                                Text(text = "yyeet")
+                                    IconButton(onClick = {expanded = false}) {
+                                        Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                                    }
+                                } else {
+                                    IconButton(onClick = {expanded = true}) {
+                                        Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                                    }
+                                }
                             }
                             Row(
                                 modifier = Modifier
@@ -176,6 +200,7 @@ fun HomeView(bookVM: BookViewModel) {
                                     },
                                     modifier= Modifier.size(50.dp),
                                     shape = CircleShape,
+
                                 ) {
                                     Icon(
                                             painter = painterResource(id = R.drawable.outline_add_24),
@@ -236,7 +261,9 @@ fun ReservationView(bookVM: BookViewModel) {
                                     ))
                                 },
                                     modifier= Modifier.size(50.dp),
-                                    shape = CircleShape
+                                    shape = CircleShape,
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                    elevation = null
 
                                 ) {
                                     Icon(
@@ -281,23 +308,7 @@ fun NoteView(noteVM: NoteViewModel) {
         .background(Color(0xFF9BD5EB))
         .padding(10.dp),
     ){
-        OutlinedTextField(
-            value = note,
-            onValueChange = { note = it },
-            label = { Text(text = "Grocery List") })
-        Spacer(modifier = Modifier.height(10.dp))
-        OutlinedButton(
-            onClick = { noteVM.addNote( Note(note) ) }
-        ) {
-            Text(text = "Add Item")
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        noteVM.notes.value.forEach {
-            Divider(thickness = 2.dp)
-            Text(text = it.message)
-        }
-        Divider(thickness = 2.dp)
+        ExpandableCard(BookViewModel())
     }
 }
 
