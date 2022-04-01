@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -71,7 +70,7 @@ fun MainContentView(navController: NavHostController) {
 
     }
 }
-@Composable
+/* @Composable
 fun ExpandableCard(bookVM: BookViewModel) {
     var expanded by remember { mutableStateOf(false)}
 
@@ -112,7 +111,7 @@ fun ExpandableCard(bookVM: BookViewModel) {
                                     Button(
                                         onClick = {
                                             bookVM.addReservation(Book(
-                                                name = it.name, author = it.author, image = it.image
+                                                name = it.name, author = it.author, image = it.image, description = it.description
                                             ))
                                         },
                                         modifier= Modifier.size(50.dp),
@@ -143,7 +142,7 @@ fun ExpandableCard(bookVM: BookViewModel) {
                 }
             }
         }
-    }
+    } */
 
 
 @Composable
@@ -176,9 +175,10 @@ fun HomeView(bookVM: BookViewModel) {
                                 Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                                 Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
                                 if (expanded){
-                                Text(text = "yyeet")
+
                                     IconButton(onClick = {expanded = false}) {
                                         Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                                        Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp)
                                     }
                                 } else {
                                     IconButton(onClick = {expanded = true}) {
@@ -195,7 +195,7 @@ fun HomeView(bookVM: BookViewModel) {
                                 Button(
                                     onClick = {
                                         bookVM.addReservation(Book(
-                                            name = it.name, author = it.author, image = it.image
+                                            name = it.name, author = it.author, image = it.image, description = it.description
                                         ))
                                     },
                                     modifier= Modifier.size(50.dp),
@@ -257,7 +257,7 @@ fun ReservationView(bookVM: BookViewModel) {
                                      horizontalArrangement = Arrangement.End) {
                                 Button(onClick = {
                                     bookVM.deleteReservation(Book(
-                                        image = "", name = "", author = ""
+                                        image = "", name = "", author = "", description = ""
                                     ))
                                 },
                                     modifier= Modifier.size(50.dp),
@@ -280,7 +280,7 @@ fun ReservationView(bookVM: BookViewModel) {
             Button(
                 onClick = {
                     bookVM.confirmReservation(Book(
-                        image = "", name = "", author = ""
+                        image = "", name = "", author = "", description = ""
                     ))
                 },
                 shape = RoundedCornerShape(36.dp),
@@ -308,7 +308,7 @@ fun NoteView(noteVM: NoteViewModel) {
         .background(Color(0xFF9BD5EB))
         .padding(10.dp),
     ){
-        ExpandableCard(BookViewModel())
+
     }
 }
 
