@@ -21,7 +21,9 @@ class BookViewModel: ViewModel() {
                     val bookName = d.get("name").toString()
                     val bookAuthor = d.get("author").toString()
                     val bookDescription = d.get("description").toString()
+                    
                     books.add(Book(bookName, bookAuthor, bookImage,bookDescription))
+
                 }
             }
     }

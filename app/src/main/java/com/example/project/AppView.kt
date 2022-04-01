@@ -51,6 +51,7 @@ fun MainView() {
 fun MainScaffoldView(userVM: UserViewModel) {
     val userVM = viewModel<UserViewModel>()
 
+
            if( userVM.isAdmin.value ) {
                val navController = rememberNavController()
                Scaffold(
@@ -64,7 +65,6 @@ fun MainScaffoldView(userVM: UserViewModel) {
                    bottomBar = { BottomBarViewUser(navController) },
                    content = { MainContentViewUser(navController) })
            }
-
 
 
 }
@@ -109,7 +109,6 @@ fun ExpandableCard(title: String, body: String) {
                     .fillMaxWidth()
                     .padding(12.dp),
                 horizontalArrangement = Arrangement.End){
-
                 Button(
                     onClick = {
                         bookVM.addReservation(Book(
@@ -127,7 +126,6 @@ fun ExpandableCard(title: String, body: String) {
             }
         }
     }
-
  */
 }
 
@@ -186,7 +184,7 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
             visualTransformation = PasswordVisualTransformation(),
             shape = RoundedCornerShape(50),
 
-        )
+            )
         Button(
             onClick = { userVM.createUser(emailRegister, pwRegister)},
             modifier = Modifier.clip(
@@ -209,7 +207,7 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
 fun SPRLogo() {
     val image: Painter = painterResource(id = R.drawable.composelogo)
     Image(painter = image,contentDescription = "Default logo",
-    modifier = Modifier.width(250.dp))
+        modifier = Modifier.width(250.dp))
 }
 
 

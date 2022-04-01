@@ -101,6 +101,9 @@ fun search(textVal: MutableState<TextFieldValue>) {
 
 @Composable
 fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
+
+    var expanded by remember { mutableStateOf(false)}
+
     Column(
         modifier = Modifier
             .padding(15.dp)
@@ -126,6 +129,17 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                         Column(verticalArrangement = Arrangement.Center) {
                             Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                             Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                            if (expanded){
+
+                                IconButton(onClick = {expanded = false}) {
+                                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                                    Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp)
+                                }
+                            } else {
+                                IconButton(onClick = {expanded = true}) {
+                                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                                }
+                            }
                         }
                         Row(
                             modifier = Modifier
@@ -141,7 +155,8 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                 },
                                 modifier= Modifier.size(50.dp),
                                 shape = CircleShape,
-                            ) {
+                                ) {
+
                                 Icon(
                                     painter = painterResource(id = R.drawable.outline_add_24),
                                     contentDescription = "Add to reservations",
@@ -201,7 +216,9 @@ fun ReservationView(bookVM: BookViewModel) {
                                     ))
                                 },
                                     modifier= Modifier.size(50.dp),
-                                    shape = CircleShape
+                                    shape = CircleShape,
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                    elevation = null
 
                                 ) {
                                     Icon(
@@ -255,4 +272,5 @@ fun BottomBarViewUser(navController: NavHostController) {
             modifier = Modifier.clickable { navController.navigate(RESERVATION_ROUTE)}
         )
     }
+
 }
