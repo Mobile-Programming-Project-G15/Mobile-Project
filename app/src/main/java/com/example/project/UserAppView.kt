@@ -101,6 +101,7 @@ fun search(textVal: MutableState<TextFieldValue>) {
 
 @Composable
 fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
+
     var expanded by remember { mutableStateOf(false)}
 
     Column(
@@ -154,8 +155,8 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                 },
                                 modifier= Modifier.size(50.dp),
                                 shape = CircleShape,
-
                                 ) {
+
                                 Icon(
                                     painter = painterResource(id = R.drawable.outline_add_24),
                                     contentDescription = "Add to reservations",
@@ -271,4 +272,5 @@ fun BottomBarViewUser(navController: NavHostController) {
             modifier = Modifier.clickable { navController.navigate(RESERVATION_ROUTE)}
         )
     }
+
 }

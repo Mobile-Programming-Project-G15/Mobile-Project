@@ -51,20 +51,20 @@ fun MainView() {
 fun MainScaffoldView(userVM: UserViewModel) {
     val userVM = viewModel<UserViewModel>()
 
-    if( userVM.isAdmin.value ) {
-        val navController = rememberNavController()
-        Scaffold(
-            topBar = { TopBarView() },
-            bottomBar = { BottomBarViewAdmin(navController) },
-            content = { MainContentViewAdmin(navController) })
-    } else {
-        val navController = rememberNavController()
-        Scaffold(
-            topBar = { TopBarView() },
-            bottomBar = { BottomBarViewUser(navController) },
-            content = { MainContentViewUser(navController) })
-    }
 
+           if( userVM.isAdmin.value ) {
+               val navController = rememberNavController()
+               Scaffold(
+                   topBar = { TopBarView() },
+                   bottomBar = { BottomBarViewAdmin(navController) },
+                   content = { MainContentViewAdmin(navController) })
+           } else {
+               val navController = rememberNavController()
+               Scaffold(
+                   topBar = { TopBarView() },
+                   bottomBar = { BottomBarViewUser(navController) },
+                   content = { MainContentViewUser(navController) })
+           }
 
 
 }
