@@ -3,7 +3,6 @@ package com.example.project
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -12,13 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,26 +22,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.example.project.ui.theme.RedA700
-
 
 @Composable
 fun MainContentViewAdmin(navController: NavHostController) {
-    val noteVM = viewModel<NoteViewModel>()
     val bookVM = viewModel<BookViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
         composable( route = HOME_ROUTE ){ searchAndHomeAdmin(bookVM) }
-        composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
-
+        composable( route = ADDBOOK_ROUTE ){ addBooks(bookVM) }
     }
 }
 
 @Composable
 fun searchAndHomeAdmin(bookVM: BookViewModel) {
     val textVal = remember { mutableStateOf(TextFieldValue("")) }
+
     Column {
         searchAdmin(textVal)
         HomeViewAdmin(bookVM, textVal)
@@ -135,19 +127,22 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 .padding(12.dp),
                             horizontalArrangement = Arrangement.End){
 
-                            Button(
-                                onClick = {
-                                    bookVM.addReservation(Book(
-                                        name = it.name, author = it.author, image = it.image, description = it.description
-                                    ))
-                                },
+                            Button(onClick = {
+                                bookVM.deleteReservation(Book(
+                                    image = "", name = "", author = "", description = ""
+                                ))
+                            },
                                 modifier= Modifier.size(50.dp),
                                 shape = CircleShape,
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                elevation = null
+
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.outline_add_24),
-                                    contentDescription = "Add to reservations",
-                                    modifier = Modifier .fillMaxWidth() )
+                                    painter = painterResource(id = R.drawable.outline_clear_white_18),
+                                    contentDescription = "Delete",
+                                    modifier = Modifier.fillMaxWidth()
+                                )
                             }
                         }
                     }
@@ -161,35 +156,55 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
 
 
 @Composable
-fun NoteView(noteVM: NoteViewModel) {
+fun addBooks(bookVM: BookViewModel) {
+    var bookName by remember {mutableStateOf("")}
+    var bookAuthor by remember {mutableStateOf("")}
+    var bookImage by remember {mutableStateOf("")}
+    var bookDescription by remember {mutableStateOf("")}
 
-    var note by remember {mutableStateOf("")}
-
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFF9BD5EB))
-        .padding(10.dp),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.SpaceEvenly,
     ){
         OutlinedTextField(
-            value = note,
-            onValueChange = { note = it },
-            label = { Text(text = "Grocery List") })
+            value = bookName,
+            onValueChange = { bookName = it },
+            label = { Text(text = "Book Name") })
         Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = bookAuthor,
+            onValueChange = { bookAuthor = it },
+            label = { Text(text = "Book Author") })
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = bookImage,
+            onValueChange = { bookImage = it },
+            label = { Text(text = "Book Image") })
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = bookDescription,
+            onValueChange = { bookDescription = it },
+            label = { Text(text = "Book Description") })
+        Spacer(modifier = Modifier.height(10.dp))
+
         OutlinedButton(
-            onClick = { noteVM.addNote( Note(note) ) }
+            onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookDescription) ) }
         ) {
-            Text(text = "Add Item")
+            Text(text = "Add Book")
         }
 
         Spacer(modifier = Modifier.height(10.dp))
-        noteVM.notes.value.forEach {
+        bookVM.books.forEach {
             Divider(thickness = 2.dp)
-            Text(text = it.message)
+            Text(text = it.name)
         }
         Divider(thickness = 2.dp)
     }
 }
-
 
 @Composable
 fun BottomBarViewAdmin(navController: NavHostController) {
@@ -206,8 +221,8 @@ fun BottomBarViewAdmin(navController: NavHostController) {
         )
         Icon(
             painter = painterResource(id = R.drawable.ic_grocery),
-            contentDescription = "note",
-            modifier = Modifier.clickable { navController.navigate(NOTE_ROUTE)}
+            contentDescription = "addBook",
+            modifier = Modifier.clickable { navController.navigate(ADDBOOK_ROUTE)}
         )
     }
 }

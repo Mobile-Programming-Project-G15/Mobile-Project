@@ -2,36 +2,26 @@ package com.example.project
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
 import com.example.project.ui.theme.RedA700
 
 const val HOME_ROUTE = "home"
-const val NOTE_ROUTE = "note"
+const val ADDBOOK_ROUTE = "addBook"
 const val LOGIN_ROUTE = "login"
 const val SIGNUP_ROUTE = "signup"
 const val RESERVATION_ROUTE = "reservation"
@@ -49,8 +39,6 @@ fun MainView() {
 
 @Composable
 fun MainScaffoldView(userVM: UserViewModel) {
-    val userVM = viewModel<UserViewModel>()
-
 
            if( userVM.isAdmin.value ) {
                val navController = rememberNavController()
@@ -65,8 +53,6 @@ fun MainScaffoldView(userVM: UserViewModel) {
                    bottomBar = { BottomBarViewUser(navController) },
                    content = { MainContentViewUser(navController) })
            }
-
-
 }
 
 @Composable
@@ -159,7 +145,6 @@ fun StartView() {
     }
 }
 
-
 @Composable
 fun SignupView(userVM: UserViewModel, navController: NavHostController) {
     var emailRegister by remember { mutableStateOf("") }
@@ -185,6 +170,9 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
             shape = RoundedCornerShape(50),
 
             )
+        Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
+        Text(text="Register as Admin",modifier = Modifier.padding(5.dp))
+
         Button(
             onClick = { userVM.createUser(emailRegister, pwRegister)},
             modifier = Modifier.clip(
@@ -202,14 +190,12 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
     }
 }
 
-
 @Composable
 fun SPRLogo() {
     val image: Painter = painterResource(id = R.drawable.composelogo)
     Image(painter = image,contentDescription = "Default logo",
         modifier = Modifier.width(250.dp))
 }
-
 
 @Composable
 fun LoginView(userVM: UserViewModel, navController: NavHostController) {
@@ -239,17 +225,14 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
             shape = RoundedCornerShape(50),
             modifier = Modifier.padding(6.dp)
         )
+
+        Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
+        Text(text="I am Admin",modifier = Modifier.padding(5.dp))
+
         Button(onClick = { userVM.loginUser(emailLogin, pwLogin)}, modifier = Modifier.clip(
             RoundedCornerShape(36.dp))
         ) {
             Text(text = "Login", modifier = Modifier.padding(6.dp))
-        }
-
-        Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
-        Text(text="Admin",modifier = Modifier.padding(5.dp))
-
-        if(userVM.isAdmin.value) {
-            Text(text= "ok works")
         }
 
         Row(verticalAlignment = CenterVertically) {
@@ -257,6 +240,5 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
             Text(text = "Sign up", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)}))
 
         }
-
     }
 }

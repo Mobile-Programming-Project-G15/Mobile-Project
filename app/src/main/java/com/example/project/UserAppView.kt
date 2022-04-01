@@ -12,13 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,9 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.example.project.ui.theme.RedA700
 
 @Composable
 fun MainContentViewUser(navController: NavHostController) {
@@ -37,7 +32,6 @@ fun MainContentViewUser(navController: NavHostController) {
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
         composable( route = HOME_ROUTE ){ searchAndHome(bookVM) }
         composable( route = RESERVATION_ROUTE ){ ReservationView(bookVM) }
-
     }
 }
 
@@ -252,7 +246,6 @@ fun ReservationView(bookVM: BookViewModel) {
     }
 }
 
-
 @Composable
 fun BottomBarViewUser(navController: NavHostController) {
     Row(modifier = Modifier
@@ -272,5 +265,4 @@ fun BottomBarViewUser(navController: NavHostController) {
             modifier = Modifier.clickable { navController.navigate(RESERVATION_ROUTE)}
         )
     }
-
 }

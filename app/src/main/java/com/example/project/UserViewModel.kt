@@ -1,8 +1,6 @@
 package com.example.project
 
-
 import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
@@ -11,8 +9,7 @@ import com.google.firebase.ktx.Firebase
 class UserViewModel: ViewModel() {
     var username = mutableStateOf("")
     var isAdmin = mutableStateOf<Boolean>(false)
-
-
+    
     fun createUser( emailRegister: String, pwRegister: String) {
         Firebase.auth
             .createUserWithEmailAndPassword(emailRegister, pwRegister)
