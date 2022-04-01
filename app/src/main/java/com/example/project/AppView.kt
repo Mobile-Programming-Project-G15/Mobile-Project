@@ -30,7 +30,6 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.project.ui.theme.RedA700
 
-
 const val HOME_ROUTE = "home"
 const val NOTE_ROUTE = "note"
 const val LOGIN_ROUTE = "login"
@@ -44,38 +43,32 @@ fun MainView() {
     if(userVM.username.value.isEmpty()) {
         StartView()
     } else {
-        MainScaffoldView()
+        MainScaffoldView(userVM)
     }
 }
 
 @Composable
-fun MainScaffoldView() {
-    /* var isAdmin by remember { mutableStateOf(false) } */
+fun MainScaffoldView(userVM: UserViewModel) {
+    val userVM = viewModel<UserViewModel>()
 
-    /* Checkbox(checked = isAdmin, onCheckChange = { isAdmin = !isAdmin })
-           if( isSaved ) {
-           } else {}
-        */
-    val navController = rememberNavController()
+           if( userVM.isAdmin.value ) {
+               val navController = rememberNavController()
+               Scaffold(
+                   topBar = { TopBarView() },
+                   bottomBar = { BottomBarViewAdmin(navController) },
+                   content = { MainContentViewAdmin(navController) })
+           } else {
+               val navController = rememberNavController()
+               Scaffold(
+                   topBar = { TopBarView() },
+                   bottomBar = { BottomBarViewUser(navController) },
+                   content = { MainContentViewUser(navController) })
+           }
 
-    Scaffold(
-        topBar = { TopBarView() },
-        bottomBar = { BottomBarView(navController) },
-        content = { MainContentView(navController) })
+
+
 }
 
-@Composable
-fun MainContentView(navController: NavHostController) {
-    val noteVM = viewModel<NoteViewModel>()
-    val bookVM = viewModel<BookViewModel>()
-
-    NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ searchAndHome(bookVM) }
-        composable( route = NOTE_ROUTE ){ NoteView(noteVM) }
-        composable( route = RESERVATION_ROUTE ){ ReservationView(bookVM) }
-
-    }
-}
 @Composable
 fun ExpandableCard(title: String, body: String) {
     var expanded by remember { mutableStateOf(false)}
@@ -136,258 +129,6 @@ fun ExpandableCard(title: String, body: String) {
     }
 
  */
-}
-
-@Composable
-fun searchAndHome(bookVM: BookViewModel) {
-    val textVal = remember { mutableStateOf(TextFieldValue("")) }
-    Column {
-        search(textVal)
-        HomeView(bookVM, textVal)
-    }
-}
-
-@Composable
-fun search(textVal: MutableState<TextFieldValue>) {
-    TextField(
-        value = textVal.value,
-        onValueChange = { textVal.value = it },
-        modifier = Modifier
-            .fillMaxWidth(),
-        textStyle = TextStyle(Color.Black, fontSize = 18.sp),
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Search,
-                contentDescription = "Search",
-                modifier = Modifier
-                    .padding(15.dp)
-                    .size(24.dp)
-            )
-        },
-        trailingIcon = {
-            if(textVal.value != TextFieldValue("")) {
-                IconButton(
-                    onClick = {
-                        textVal.value = TextFieldValue("")
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "Close",
-                        modifier = Modifier
-                            .padding(15.dp)
-                            .size(24.dp)
-                    )
-                }
-            }
-        },
-        singleLine = true,
-        shape = RectangleShape,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Black,
-            cursorColor = Color.Black,
-            leadingIconColor = Color.Black,
-            trailingIconColor = Color.Black,
-            backgroundColor = Color.LightGray,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
-    )
-}
-
-@Composable
-fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
-    Column(
-        modifier = Modifier
-            .padding(15.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = CenterHorizontally
-
-    ) {
-        bookVM.books.forEach {
-            Column(modifier = Modifier
-                .padding(16.dp, 6.dp, 12.dp, 16.dp),
-                horizontalAlignment = CenterHorizontally,
-            ) {
-
-            Card(modifier = Modifier.fillMaxWidth(),
-                elevation = 8.dp
-            ) {
-
-                Row(verticalAlignment = CenterVertically) {
-                    AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                        .padding(12.dp)
-                        .width(60.dp)
-                    )
-                    Column(verticalArrangement = Arrangement.Center) {
-                        Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                        Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
-                        horizontalArrangement = Arrangement.End){
-
-                        Button(
-                            onClick = {
-                                bookVM.addReservation(Book(
-                                    name = it.name, author = it.author, image = it.image, description = it.description
-                                ))
-                            },
-                            modifier= Modifier.size(50.dp),
-                            shape = CircleShape,
-                        ) {
-                            Icon(
-                                    painter = painterResource(id = R.drawable.outline_add_24),
-                                    contentDescription = "Add to reservations",
-                                        modifier = Modifier .fillMaxWidth() )
-                        }
-                    }
-                }
-            }
-        }
-
-        }
-        Spacer(modifier = Modifier.height(30.dp))
-    }
-}
-
-@Composable
-fun ReservationView(bookVM: BookViewModel) {
-    Column(
-        modifier = Modifier
-            .padding(15.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = CenterHorizontally
-    )
-    {
-        if(bookVM.reservedBooks.isEmpty()) {
-            Text ( text = "Your Reservation List is empty")
-        } else {
-            bookVM.reservedBooks.forEach {
-                Column(modifier = Modifier
-                    .padding(16.dp, 6.dp, 12.dp, 16.dp),
-                    horizontalAlignment = CenterHorizontally,
-                ) {
-                    Card(modifier = Modifier.fillMaxWidth(),
-                        elevation = 8.dp,
-
-                    ) {
-                        Row(verticalAlignment = CenterVertically) {
-                            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                                .padding(12.dp)
-                                .width(60.dp)
-                            )
-                            Column(
-                                modifier = Modifier,
-                            verticalArrangement = Arrangement.Center,
-                            ) {
-                                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-                            }
-                            Row(
-                                 modifier = Modifier
-                                     .fillMaxWidth()
-                                     .padding(12.dp),
-                                     horizontalArrangement = Arrangement.End) {
-                                Button(onClick = {
-                                    bookVM.deleteReservation(Book(
-                                        image = "", name = "", author = "", description = ""
-                                    ))
-                                },
-                                    modifier= Modifier.size(50.dp),
-                                    shape = CircleShape
-
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.outline_clear_white_18),
-                                        contentDescription = "Delete",
-                                        modifier = Modifier.fillMaxWidth()
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            Button(
-                onClick = {
-                    bookVM.confirmReservation(Book(
-                        image = "", name = "", author = "", description = ""
-                    ))
-                },
-                shape = RoundedCornerShape(36.dp),
-                modifier = Modifier.padding(12.dp),
-            ) {
-                Text(
-                    text = "Confirm Reservation",
-                    modifier = Modifier.padding(6.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(48.dp))
-        }
-
-    }
-}
-
-
-@Composable
-fun NoteView(noteVM: NoteViewModel) {
-
-    var note by remember {mutableStateOf("")}
-
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFF9BD5EB))
-        .padding(10.dp),
-    ){
-        OutlinedTextField(
-            value = note,
-            onValueChange = { note = it },
-            label = { Text(text = "Grocery List") })
-        Spacer(modifier = Modifier.height(10.dp))
-        OutlinedButton(
-            onClick = { noteVM.addNote( Note(note) ) }
-        ) {
-            Text(text = "Add Item")
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        noteVM.notes.value.forEach {
-            Divider(thickness = 2.dp)
-            Text(text = it.message)
-        }
-        Divider(thickness = 2.dp)
-    }
-}
-
-
-@Composable
-fun BottomBarView(navController: NavHostController) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .background(Color(0xFFD50000)),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_home),
-            contentDescription = "home",
-            modifier = Modifier.clickable { navController.navigate(HOME_ROUTE)}
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.ic_reserved),
-            contentDescription = "reservation",
-            modifier = Modifier.clickable { navController.navigate(RESERVATION_ROUTE)}
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.ic_grocery),
-            contentDescription = "note",
-            modifier = Modifier.clickable { navController.navigate(NOTE_ROUTE)}
-        )
-    }
 }
 
 @Composable
@@ -453,8 +194,6 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
             )
         ) {
             Text(text = "Register", modifier = Modifier.padding(6.dp))
-
-
         }
 
         Row(verticalAlignment = CenterVertically) {
@@ -506,6 +245,13 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
             RoundedCornerShape(36.dp))
         ) {
             Text(text = "Login", modifier = Modifier.padding(6.dp))
+        }
+
+        Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
+        Text(text="Admin",modifier = Modifier.padding(5.dp))
+
+        if(userVM.isAdmin.value) {
+            Text(text= "ok works")
         }
 
         Row(verticalAlignment = CenterVertically) {
