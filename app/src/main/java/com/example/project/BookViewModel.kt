@@ -1,8 +1,8 @@
 package com.example.project
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -44,41 +44,19 @@ class BookViewModel: ViewModel() {
     }
 
     fun addBookByAdmin(book: Book) {
-        books.add(book)
-    }
+        val db = FirebaseFirestore.getInstance()
 
-    /* init{
-        Firebase.firestore
-            .collection("lists")
-            .document(Firebase.auth.currentUser!!.uid)
-            .addSnapshotListener { value, error ->
-                if(error != null) {
-                    //error message
-                } else if(value != null && !value.isEmpty) {
-                    val listName = mutableListOf<String>()
-                    for(d in value) {
-                        listName.add(d.get("name").toString())
-                    }
-                    notes.value = listName
-                }
-
+        db.collection("books")
+            .add(book)
+            .addOnSuccessListener {
+                books.add(Book(book.name, book.author, book.image, book.description))
             }
+
     }
 
-        //Firebase.firestore.currentUser!!.uid
 
-    fun getFromFirestore(){
-    Firebase.auth
-        .signInWithEmailAndPassword(emailLogin, pwLogin)
-        .addOnSuccessListener {
-            Firebase.firestore
-                .collection("lists")
-                .document(it.user!!.uid)
-                .get()
-                .addOnSuccessListener { doc ->
-                    notes = doc.get("name").toString()
-                }
-        }
 
-    }*/
+
+
+
 }
