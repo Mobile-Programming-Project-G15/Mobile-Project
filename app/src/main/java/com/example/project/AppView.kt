@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -155,6 +156,8 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
             .fillMaxWidth()
             .height(400.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
         OutlinedTextField(
             value = emailRegister,
@@ -171,7 +174,7 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
 
             )
         Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
-        Text(text="Register as Admin",modifier = Modifier.padding(5.dp))
+        Text(text="Register as Admin",modifier = Modifier.padding(6.dp))
 
         Button(
             onClick = { userVM.createUser(emailRegister, pwRegister)},
@@ -205,8 +208,11 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.SpaceEvenly,
+            .fillMaxWidth()
+            .padding(38.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
 
         SPRLogo()
@@ -216,26 +222,28 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
             onValueChange = { emailLogin = it },
             label = { Text(text = "Email") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(6.dp))
+            modifier = Modifier.padding(12.dp))
         OutlinedTextField(
             value = pwLogin,
             onValueChange = { pwLogin = it },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation(),
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(6.dp)
+            modifier = Modifier.padding(12.dp)
         )
 
         Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
-        Text(text="I am Admin",modifier = Modifier.padding(5.dp))
+        Text(text="I'm an Admin",modifier = Modifier.padding(6.dp))
 
         Button(onClick = { userVM.loginUser(emailLogin, pwLogin)}, modifier = Modifier.clip(
             RoundedCornerShape(36.dp))
         ) {
-            Text(text = "Login", modifier = Modifier.padding(6.dp))
+            Text(text = "Login", modifier = Modifier.padding(8.dp))
         }
 
-        Row(verticalAlignment = CenterVertically) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = CenterVertically) {
             Text(text = "Don't have an account? ")
             Text(text = "Sign up", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(SIGNUP_ROUTE)}))
 
