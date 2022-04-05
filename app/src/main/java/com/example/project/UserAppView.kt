@@ -1,5 +1,6 @@
 package com.example.project
 
+import android.graphics.Paint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -114,7 +117,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                 Card(modifier = Modifier.fillMaxWidth(),
                     elevation = 8.dp
                 ) {
-
+                Column() {
                     Row(verticalAlignment = CenterVertically) {
                         AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
                             .padding(12.dp)
@@ -122,19 +125,10 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                         )
                         Column(verticalArrangement = Arrangement.Center) {
                             Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                            Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-                            if (expanded){
+                            Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp) }
 
-                                IconButton(onClick = {expanded = false}) {
-                                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
-                                    Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp)
-                                }
-                            } else {
-                                IconButton(onClick = {expanded = true}) {
-                                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
-                                }
-                            }
-                        }
+
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -149,7 +143,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                 },
                                 modifier= Modifier.size(50.dp),
                                 shape = CircleShape,
-                                ) {
+                            ) {
 
                                 Icon(
                                     painter = painterResource(id = R.drawable.outline_add_24),
@@ -158,6 +152,29 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                             }
                         }
                     }
+                    Row(verticalAlignment = CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier .fillMaxWidth()) {
+                        if (expanded){
+                            IconButton(onClick = {expanded = false}) {
+                                Column(horizontalAlignment = CenterHorizontally) {
+                                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                                        Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp, textAlign = TextAlign.Start)
+
+                                }
+
+
+                            }
+                        } else {
+                            IconButton(onClick = {expanded = true}) {
+                                Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                            }
+                        }
+                    }
+                }
+
+
+
                 }
             }
 
@@ -176,7 +193,7 @@ fun ReservationView(bookVM: BookViewModel) {
     )
     {
         if(bookVM.reservedBooks.isEmpty()) {
-            Text ( text = "Your Reservation List is empty")
+            Text ( text = "Your Reservation List is empty", textAlign = TextAlign.Center)
         } else {
             bookVM.reservedBooks.forEach {
                 Column(modifier = Modifier
