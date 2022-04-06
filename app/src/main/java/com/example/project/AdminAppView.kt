@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -47,10 +48,12 @@ fun searchAndHomeAdmin(bookVM: BookViewModel) {
 @Composable
 fun searchAdmin(textVal: MutableState<TextFieldValue>) {
     TextField(
+        placeholder = { Text("Search for books") },
         value = textVal.value,
         onValueChange = { textVal.value = it },
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .shadow(elevation = 12.dp),
         textStyle = TextStyle(Color.Black, fontSize = 18.sp),
         leadingIcon = {
             Icon(
@@ -81,14 +84,12 @@ fun searchAdmin(textVal: MutableState<TextFieldValue>) {
         singleLine = true,
         shape = RectangleShape,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Black,
-            cursorColor = Color.Black,
-            leadingIconColor = Color.Black,
-            trailingIconColor = Color.Black,
-            backgroundColor = Color.LightGray,
+            textColor = Color.DarkGray,
+            cursorColor = Color.Red,
+            backgroundColor = Color.White,
+            trailingIconColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
         )
     )
 }

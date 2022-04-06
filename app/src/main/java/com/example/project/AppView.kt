@@ -154,16 +154,19 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(400.dp),
+            .padding(38.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
+        SPRLogo()
+
         OutlinedTextField(
             value = emailRegister,
             onValueChange = { emailRegister = it },
             label = { Text(text = "Email") },
-            shape = RoundedCornerShape(50)
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp)
         )
         OutlinedTextField(
             value = pwRegister,
@@ -171,6 +174,7 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation(),
             shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp)
 
             )
         Checkbox(checked = userVM.isAdmin.value, onCheckedChange = { userVM.isAdmin.value = it })
@@ -179,13 +183,15 @@ fun SignupView(userVM: UserViewModel, navController: NavHostController) {
         Button(
             onClick = { userVM.createUser(emailRegister, pwRegister)},
             modifier = Modifier.clip(
-                RoundedCornerShape(50)
+                RoundedCornerShape(50),
+
             )
         ) {
-            Text(text = "Register", modifier = Modifier.padding(6.dp))
+            Text(text = "Register", modifier = Modifier.padding(8.dp))
         }
 
-        Row(verticalAlignment = CenterVertically) {
+        Row(verticalAlignment = CenterVertically, modifier = Modifier.padding(12.dp)) {
+
             Text(text = "Already have an account? ")
             Text(text = "Sign in", color = RedA700, modifier = Modifier.clickable(onClick = {navController.navigate(LOGIN_ROUTE)}))
         }

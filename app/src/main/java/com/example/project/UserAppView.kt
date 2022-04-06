@@ -1,6 +1,5 @@
 package com.example.project
 
-import android.graphics.Paint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,10 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -33,28 +32,30 @@ fun MainContentViewUser(navController: NavHostController) {
     val bookVM = viewModel<BookViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ searchAndHome(bookVM) }
+        composable( route = HOME_ROUTE ){ SearchAndHome(bookVM) }
         composable( route = RESERVATION_ROUTE ){ ReservationView(bookVM) }
     }
 }
 
 @Composable
-fun searchAndHome(bookVM: BookViewModel) {
+fun SearchAndHome(bookVM: BookViewModel) {
     val textVal = remember { mutableStateOf(TextFieldValue("")) }
     Column {
-        search(textVal)
+        Search(textVal)
         HomeView(bookVM, textVal)
     }
 }
 
 @Composable
-fun search(textVal: MutableState<TextFieldValue>) {
+fun Search(textVal: MutableState<TextFieldValue>) {
     TextField(
+        placeholder = { Text("Search for books") },
         value = textVal.value,
         onValueChange = { textVal.value = it },
         modifier = Modifier
-            .fillMaxWidth(),
-        textStyle = TextStyle(Color.Black, fontSize = 18.sp),
+            .fillMaxWidth()
+            .shadow(elevation = 12.dp),
+        textStyle = TextStyle(Color.DarkGray, fontSize = 18.sp),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
@@ -77,6 +78,7 @@ fun search(textVal: MutableState<TextFieldValue>) {
                         modifier = Modifier
                             .padding(15.dp)
                             .size(24.dp)
+
                     )
                 }
             }
@@ -84,22 +86,20 @@ fun search(textVal: MutableState<TextFieldValue>) {
         singleLine = true,
         shape = RectangleShape,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Black,
-            cursorColor = Color.Black,
-            leadingIconColor = Color.Black,
-            trailingIconColor = Color.Black,
-            backgroundColor = Color.LightGray,
+            textColor = Color.DarkGray,
+            cursorColor = Color.Red,
+            backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
         )
     )
+
 }
 
 @Composable
 fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
 
-    var expanded by remember { mutableStateOf(false)}
+
 
     Column(
         modifier = Modifier
@@ -117,7 +117,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                 Card(modifier = Modifier.fillMaxWidth(),
                     elevation = 8.dp
                 ) {
-                Column() {
+                Column {
                     Row(verticalAlignment = CenterVertically) {
                         AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
                             .padding(12.dp)
@@ -152,29 +152,31 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                             }
                         }
                     }
-                    Row(verticalAlignment = CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier .fillMaxWidth()) {
-                        if (expanded){
-                            IconButton(onClick = {expanded = false}) {
-                                Column(horizontalAlignment = CenterHorizontally) {
-                                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
-                                        Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp, textAlign = TextAlign.Start)
+
+
+                        Row(verticalAlignment = CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier .fillMaxWidth()) {
+
+                            var expanded by remember { mutableStateOf(false)}
+
+                            if (expanded){
+                                IconButton(onClick = {expanded = false}) {
+                                    Column(horizontalAlignment = CenterHorizontally) {
+                                        Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                                            Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp, textAlign = TextAlign.Center)
+
+                                    }
+
 
                                 }
-
-
-                            }
-                        } else {
-                            IconButton(onClick = {expanded = true}) {
-                                Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                            } else {
+                                IconButton(onClick = {expanded = true}) {
+                                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                                }
                             }
                         }
                     }
-                }
-
-
-
                 }
             }
 
