@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -50,11 +51,13 @@ fun searchAndHome(bookVM: BookViewModel) {
 @Composable
 fun search(textVal: MutableState<TextFieldValue>) {
     TextField(
+        placeholder = { Text("Search for books") },
         value = textVal.value,
         onValueChange = { textVal.value = it },
         modifier = Modifier
-            .fillMaxWidth(),
-        textStyle = TextStyle(Color.Black, fontSize = 18.sp),
+            .fillMaxWidth()
+            .shadow(elevation = 12.dp),
+        textStyle = TextStyle(Color.DarkGray, fontSize = 18.sp),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
@@ -77,6 +80,7 @@ fun search(textVal: MutableState<TextFieldValue>) {
                         modifier = Modifier
                             .padding(15.dp)
                             .size(24.dp)
+
                     )
                 }
             }
@@ -84,16 +88,14 @@ fun search(textVal: MutableState<TextFieldValue>) {
         singleLine = true,
         shape = RectangleShape,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Black,
-            cursorColor = Color.Black,
-            leadingIconColor = Color.Black,
-            trailingIconColor = Color.Black,
-            backgroundColor = Color.LightGray,
+            textColor = Color.DarkGray,
+            cursorColor = Color.Red,
+            backgroundColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
         )
     )
+
 }
 
 @Composable
