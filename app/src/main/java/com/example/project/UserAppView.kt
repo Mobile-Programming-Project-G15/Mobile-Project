@@ -99,7 +99,7 @@ fun Search(textVal: MutableState<TextFieldValue>) {
 @Composable
 fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
 
-    var expanded by remember { mutableStateOf(false)}
+
 
     Column(
         modifier = Modifier
@@ -152,29 +152,31 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                             }
                         }
                     }
-                    Row(verticalAlignment = CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier .fillMaxWidth()) {
-                        if (expanded){
-                            IconButton(onClick = {expanded = false}) {
-                                Column(horizontalAlignment = CenterHorizontally) {
-                                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
-                                        Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp, textAlign = TextAlign.Start)
+
+
+                        Row(verticalAlignment = CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier .fillMaxWidth()) {
+
+                            var expanded by remember { mutableStateOf(false)}
+
+                            if (expanded){
+                                IconButton(onClick = {expanded = false}) {
+                                    Column(horizontalAlignment = CenterHorizontally) {
+                                        Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
+                                            Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp, textAlign = TextAlign.Center)
+
+                                    }
+
 
                                 }
-
-
-                            }
-                        } else {
-                            IconButton(onClick = {expanded = true}) {
-                                Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                            } else {
+                                IconButton(onClick = {expanded = true}) {
+                                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                                }
                             }
                         }
                     }
-                }
-
-
-
                 }
             }
 
