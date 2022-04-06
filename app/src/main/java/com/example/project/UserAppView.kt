@@ -1,6 +1,5 @@
 package com.example.project
 
-import android.graphics.Paint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -34,22 +32,22 @@ fun MainContentViewUser(navController: NavHostController) {
     val bookVM = viewModel<BookViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ searchAndHome(bookVM) }
+        composable( route = HOME_ROUTE ){ SearchAndHome(bookVM) }
         composable( route = RESERVATION_ROUTE ){ ReservationView(bookVM) }
     }
 }
 
 @Composable
-fun searchAndHome(bookVM: BookViewModel) {
+fun SearchAndHome(bookVM: BookViewModel) {
     val textVal = remember { mutableStateOf(TextFieldValue("")) }
     Column {
-        search(textVal)
+        Search(textVal)
         HomeView(bookVM, textVal)
     }
 }
 
 @Composable
-fun search(textVal: MutableState<TextFieldValue>) {
+fun Search(textVal: MutableState<TextFieldValue>) {
     TextField(
         placeholder = { Text("Search for books") },
         value = textVal.value,
@@ -119,7 +117,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                 Card(modifier = Modifier.fillMaxWidth(),
                     elevation = 8.dp
                 ) {
-                Column() {
+                Column {
                     Row(verticalAlignment = CenterVertically) {
                         AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
                             .padding(12.dp)
