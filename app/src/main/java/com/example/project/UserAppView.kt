@@ -1,5 +1,6 @@
 package com.example.project
 
+import android.graphics.Paint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -9,8 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -19,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -97,13 +102,12 @@ fun Search(textVal: MutableState<TextFieldValue>) {
 }
 
 @Composable
+
 fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
-
-
 
     Column(
         modifier = Modifier
-            .padding(15.dp)
+            .padding(16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = CenterHorizontally
 
@@ -114,26 +118,30 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                 horizontalAlignment = CenterHorizontally,
             ) {
 
-                Card(modifier = Modifier.fillMaxWidth(),
+
+                Card(modifier = Modifier
+                    .fillMaxWidth(),
                     elevation = 8.dp
                 ) {
                 Column {
                     Row(verticalAlignment = CenterVertically) {
                         AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                            .padding(12.dp)
+                            .padding(12.dp, 12.dp, 12.dp, 0.dp)
                             .width(60.dp)
                         )
                         Column(verticalArrangement = Arrangement.Center) {
                             Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                            Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp) }
+                            Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                        }
 
 
 
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.End){
+                                .padding(12.dp, 6.dp, 12.dp, 2.dp),
+                            horizontalArrangement = Arrangement.End)
+                        {
 
                             Button(
                                 onClick = {
@@ -156,23 +164,35 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
 
                         Row(verticalAlignment = CenterVertically,
                             horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier .fillMaxWidth()) {
+                            modifier = Modifier .fillMaxWidth(),
+                                ) {
 
                             var expanded by remember { mutableStateOf(false)}
 
                             if (expanded){
-                                IconButton(onClick = {expanded = false}) {
-                                    Column(horizontalAlignment = CenterHorizontally) {
-                                        Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
-                                            Text(text = it.description,  color= Color.DarkGray, fontSize = 12.sp, textAlign = TextAlign.Center)
-
+                                Column(horizontalAlignment = CenterHorizontally) {
+                                    Row() {
+                                        IconButton(onClick = {expanded = false}) {
+                                            Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
+                                        }
                                     }
 
-
+                                    Row(horizontalArrangement = Arrangement.Start,
+                                        modifier = Modifier.fillMaxWidth()
+                                            .padding(12.dp, 0.dp, 12.dp, 12.dp)) {
+                                        Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp)
+                                    }
                                 }
+
+
+
+
                             } else {
-                                IconButton(onClick = {expanded = true}) {
-                                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
+                                Row() {
+                                    IconButton(onClick = {expanded = true}) {
+                                        Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
+                                }
+
                                 }
                             }
                         }
