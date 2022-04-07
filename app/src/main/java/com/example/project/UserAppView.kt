@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -130,7 +131,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                         Column(verticalArrangement = Arrangement.Center) {
                             Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                             Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-                            Text(text = it.price, color= Color.DarkGray, fontSize = 12.sp)
+                            Text(text = it.price, color= Color.Black, fontSize = 16.sp)
                         }
                         Row(
                             modifier = Modifier
@@ -170,10 +171,20 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                             Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                         }
                                     }
-                                    Column(verticalArrangement = Arrangement.Center) {
-                                        Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
-                                        Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
-                                        Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp)
+                                    Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+                                        Row(modifier = Modifier.padding(4.dp)) {
+                                            Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                            Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
+                                        }
+                                        Row(modifier = Modifier.padding(4.dp)) {
+                                            Text(text = "Condition: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                            Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
+                                        }
+                                        Row(modifier = Modifier.padding(4.dp)) {
+                                            Text(text = "Description: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                        }
+                                        Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
+
                                     }
                                 }
                             } else {
