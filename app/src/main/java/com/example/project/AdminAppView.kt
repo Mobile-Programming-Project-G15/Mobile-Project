@@ -140,12 +140,15 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                     },
                                     modifier= Modifier.size(50.dp),
                                     shape = CircleShape,
-                                ) {
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                    elevation = null
 
+                                ) {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.outline_add_24),
-                                        contentDescription = "Add to reservations",
-                                        modifier = Modifier .fillMaxWidth() )
+                                        painter = painterResource(id = R.drawable.outline_clear_white_18),
+                                        contentDescription = "Delete",
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
                                 }
                             }
                         }
