@@ -31,23 +31,23 @@ fun MainContentViewAdmin(navController: NavHostController) {
     val bookVM = viewModel<BookViewModel>()
 
     NavHost(navController = navController, startDestination = HOME_ROUTE) {
-        composable( route = HOME_ROUTE ){ searchAndHomeAdmin(bookVM) }
-        composable( route = ADDBOOK_ROUTE ){ addBooks(bookVM) }
+        composable( route = HOME_ROUTE ){ SearchAndHomeAdmin(bookVM) }
+        composable( route = ADDBOOK_ROUTE ){ AddBooks(bookVM) }
     }
 }
 
 @Composable
-fun searchAndHomeAdmin(bookVM: BookViewModel) {
+fun SearchAndHomeAdmin(bookVM: BookViewModel) {
     val textVal = remember { mutableStateOf(TextFieldValue("")) }
 
     Column {
-        searchAdmin(textVal)
+        SearchAdmin(textVal)
         HomeViewAdmin(bookVM, textVal)
     }
 }
 
 @Composable
-fun searchAdmin(textVal: MutableState<TextFieldValue>) {
+fun SearchAdmin(textVal: MutableState<TextFieldValue>) {
     TextField(
         placeholder = { Text("Search for books") },
         value = textVal.value,
@@ -157,7 +157,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
 
                             if (expanded){
                                 Column(horizontalAlignment = CenterHorizontally) {
-                                    Row() {
+                                    Row {
                                         IconButton(onClick = {expanded = false}) {
                                             Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                         }
@@ -179,7 +179,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                     }
                                 }
                             } else {
-                                Row() {
+                                Row {
                                     IconButton(onClick = {expanded = true}) {
                                         Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
                                     }
@@ -197,7 +197,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
 
 
 @Composable
-fun addBooks(bookVM: BookViewModel) {
+fun AddBooks(bookVM: BookViewModel) {
     var bookName by remember {mutableStateOf("")}
     var bookAuthor by remember {mutableStateOf("")}
     var bookImage by remember {mutableStateOf("")}
