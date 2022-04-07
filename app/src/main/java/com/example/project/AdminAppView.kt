@@ -98,7 +98,7 @@ fun searchAdmin(textVal: MutableState<TextFieldValue>) {
 fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
     Column(
         modifier = Modifier
-            .padding(15.dp)
+            .padding(16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = CenterHorizontally
 
@@ -109,41 +109,82 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                 horizontalAlignment = CenterHorizontally,
             ) {
 
-                Card(modifier = Modifier.fillMaxWidth(),
+
+                Card(modifier = Modifier
+                    .fillMaxWidth(),
                     elevation = 8.dp
                 ) {
+                    Column {
+                        Row(verticalAlignment = CenterVertically) {
+                            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                                .padding(12.dp, 12.dp, 12.dp, 0.dp)
+                                .width(60.dp)
+                            )
+                            Column(verticalArrangement = Arrangement.Center) {
+                                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                            }
 
-                    Row(verticalAlignment = CenterVertically) {
-                        AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                            .padding(12.dp)
-                            .width(60.dp)
-                        )
-                        Column(verticalArrangement = Arrangement.Center) {
-                            Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                            Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp, 6.dp, 12.dp, 2.dp),
+                                horizontalArrangement = Arrangement.End)
+                            {
+
+                                Button(
+                                    onClick = {
+                                        bookVM.addReservation(Book(
+                                            name = it.name, author = it.author, image = it.image, description = it.description
+                                        ))
+                                    },
+                                    modifier= Modifier.size(50.dp),
+                                    shape = CircleShape,
+                                ) {
+
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.outline_add_24),
+                                        contentDescription = "Add to reservations",
+                                        modifier = Modifier .fillMaxWidth() )
+                                }
+                            }
                         }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.End){
 
-                            Button(onClick = {
-                                bookVM.deleteReservation(Book(
-                                    image = "", name = "", author = "", description = ""
-                                ))
-                            },
-                                modifier= Modifier.size(50.dp),
-                                shape = CircleShape,
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                                elevation = null
 
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.outline_clear_white_18),
-                                    contentDescription = "Delete",
-                                    modifier = Modifier.fillMaxWidth()
-                                )
+                        Row(verticalAlignment = CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier .fillMaxWidth(),
+                        ) {
+
+                            var expanded by remember { mutableStateOf(false)}
+
+                            if (expanded){
+                                Column(horizontalAlignment = CenterHorizontally) {
+                                    Row() {
+                                        IconButton(onClick = {expanded = false}) {
+                                            Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
+                                        }
+                                    }
+
+                                    Row(horizontalArrangement = Arrangement.Start,
+                                        modifier = Modifier.fillMaxWidth()
+                                            .padding(12.dp, 0.dp, 12.dp, 12.dp)) {
+                                        Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp)
+                                    }
+                                }
+
+
+
+
+                            } else {
+                                Row() {
+                                    IconButton(onClick = {expanded = true}) {
+                                        Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
+                                    }
+
+                                }
                             }
                         }
                     }
