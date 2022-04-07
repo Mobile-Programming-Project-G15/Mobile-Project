@@ -10,7 +10,6 @@ class BookViewModel: ViewModel() {
     var books = mutableStateListOf<Book>()
     var reservedBooks = mutableStateListOf<Book>()
     var isReserved = mutableStateOf<Boolean>(false)
-    var addedBooks = mutableStateOf(listOf<Book>())
 
     init {
         Firebase.firestore
@@ -22,8 +21,11 @@ class BookViewModel: ViewModel() {
                     val bookName = d.get("name").toString()
                     val bookAuthor = d.get("author").toString()
                     val bookDescription = d.get("description").toString()
-                    
-                    books.add(Book(bookName, bookAuthor, bookImage,bookDescription))
+                    val bookPrice = d.get("price").toString()
+                    val bookGenre = d.get("genre").toString()
+                    val bookCondition = d.get("condition").toString()
+
+                    books.add(Book(bookName, bookAuthor, bookImage, bookPrice, bookGenre, bookCondition,bookDescription))
                 }
             }
     }
@@ -49,14 +51,7 @@ class BookViewModel: ViewModel() {
         db.collection("books")
             .add(book)
             .addOnSuccessListener {
-                books.add(Book(book.name, book.author, book.image, book.description))
+                books.add(Book(book.name, book.author, book.image, book.price, book.genre, book.condition ,book.description))
             }
-
     }
-
-
-
-
-
-
 }

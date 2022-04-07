@@ -123,9 +123,8 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                             Column(verticalArrangement = Arrangement.Center) {
                                 Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                                 Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                                Text(text = it.price, color= Color.DarkGray, fontSize = 12.sp)
                             }
-
-
 
                             Row(
                                 modifier = Modifier
@@ -137,21 +136,24 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 Button(
                                     onClick = {
                                         bookVM.addReservation(Book(
-                                            name = it.name, author = it.author, image = it.image, description = it.description
+                                            name = it.name, author = it.author, image = it.image,
+                                            description = it.description, price = it.price,
+                                            condition = it.condition, genre = it.genre
                                         ))
                                     },
                                     modifier= Modifier.size(50.dp),
                                     shape = CircleShape,
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                    elevation = null
                                 ) {
-
                                     Icon(
-                                        painter = painterResource(id = R.drawable.outline_add_24),
-                                        contentDescription = "Add to reservations",
-                                        modifier = Modifier .fillMaxWidth() )
+                                        painter = painterResource(id = R.drawable.outline_clear_white_18),
+                                        contentDescription = "Delete",
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
                                 }
                             }
                         }
-
 
                         Row(verticalAlignment = CenterVertically,
                             horizontalArrangement = Arrangement.Center,
@@ -168,15 +170,12 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                         }
                                     }
 
-                                    Row(horizontalArrangement = Arrangement.Start,
-                                        modifier = Modifier.fillMaxWidth()
-                                            .padding(12.dp, 0.dp, 12.dp, 12.dp)) {
+                                    Column(verticalArrangement = Arrangement.Center) {
+                                        Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
+                                        Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
                                         Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp)
                                     }
                                 }
-
-
-
 
                             } else {
                                 Row() {
@@ -202,6 +201,9 @@ fun addBooks(bookVM: BookViewModel) {
     var bookName by remember {mutableStateOf("")}
     var bookAuthor by remember {mutableStateOf("")}
     var bookImage by remember {mutableStateOf("")}
+    var bookPrice by remember {mutableStateOf("")}
+    var bookCondition by remember {mutableStateOf("")}
+    var bookGenre by remember {mutableStateOf("")}
     var bookDescription by remember {mutableStateOf("")}
 
     Column(
@@ -222,9 +224,21 @@ fun addBooks(bookVM: BookViewModel) {
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
-            value = bookImage,
-            onValueChange = { bookImage = it },
-            label = { Text(text = "Book Image") })
+            value = bookPrice,
+            onValueChange = { bookPrice = it },
+            label = { Text(text = "Book Price") })
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = bookGenre,
+            onValueChange = { bookGenre = it },
+            label = { Text(text = "Book Genre") })
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
+            value = bookCondition,
+            onValueChange = { bookCondition = it },
+            label = { Text(text = "Book Condition") })
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
@@ -233,18 +247,17 @@ fun addBooks(bookVM: BookViewModel) {
             label = { Text(text = "Book Description") })
         Spacer(modifier = Modifier.height(10.dp))
 
+        OutlinedTextField(
+            value = bookImage,
+            onValueChange = { bookImage = it },
+            label = { Text(text = "Book Image") })
+        Spacer(modifier = Modifier.height(10.dp))
+
         OutlinedButton(
-            onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookDescription) ) }
+            onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookPrice, bookGenre, bookCondition , bookDescription, bookImage) ) }
         ) {
             Text(text = "Add Book")
         }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        bookVM.books.forEach {
-            Divider(thickness = 2.dp)
-            Text(text = it.name)
-        }
-        Divider(thickness = 2.dp)
     }
 }
 

@@ -117,8 +117,6 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                 .padding(16.dp, 6.dp, 12.dp, 16.dp),
                 horizontalAlignment = CenterHorizontally,
             ) {
-
-
                 Card(modifier = Modifier
                     .fillMaxWidth(),
                     elevation = 8.dp
@@ -132,21 +130,20 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                         Column(verticalArrangement = Arrangement.Center) {
                             Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                             Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                            Text(text = it.price, color= Color.DarkGray, fontSize = 12.sp)
                         }
-
-
-
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(12.dp, 6.dp, 12.dp, 2.dp),
                             horizontalArrangement = Arrangement.End)
                         {
-
                             Button(
                                 onClick = {
                                     bookVM.addReservation(Book(
-                                        name = it.name, author = it.author, image = it.image, description = it.description
+                                        name = it.name, author = it.author, image = it.image,
+                                        price = it.price, genre = it.genre,
+                                        condition = it.condition,description = it.description
                                     ))
                                 },
                                 modifier= Modifier.size(50.dp),
@@ -160,13 +157,10 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                             }
                         }
                     }
-
-
                         Row(verticalAlignment = CenterVertically,
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier .fillMaxWidth(),
                                 ) {
-
                             var expanded by remember { mutableStateOf(false)}
 
                             if (expanded){
@@ -176,23 +170,17 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                             Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                         }
                                     }
-
-                                    Row(horizontalArrangement = Arrangement.Start,
-                                        modifier = Modifier.fillMaxWidth()
-                                            .padding(12.dp, 0.dp, 12.dp, 12.dp)) {
+                                    Column(verticalArrangement = Arrangement.Center) {
+                                        Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
+                                        Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
                                         Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp)
                                     }
                                 }
-
-
-
-
                             } else {
                                 Row() {
                                     IconButton(onClick = {expanded = true}) {
                                         Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
                                 }
-
                                 }
                             }
                         }
@@ -237,6 +225,7 @@ fun ReservationView(bookVM: BookViewModel) {
                             ) {
                                 Text(text = it.name, color = Color.Black, fontSize = 16.sp)
                                 Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                                Text(text = it.price, color= Color.DarkGray, fontSize = 12.sp)
                             }
                             Row(
                                 modifier = Modifier
@@ -245,7 +234,7 @@ fun ReservationView(bookVM: BookViewModel) {
                                 horizontalArrangement = Arrangement.End) {
                                 Button(onClick = {
                                     bookVM.deleteReservation(Book(
-                                        image = "", name = "", author = "", description = ""
+                                        image = "", name = "", author = "", description = "", price = "", condition = "", genre = ""
                                     ))
                                 },
                                     modifier= Modifier.size(50.dp),
@@ -268,7 +257,7 @@ fun ReservationView(bookVM: BookViewModel) {
             Button(
                 onClick = {
                     bookVM.confirmReservation(Book(
-                        image = "", name = "", author = "", description = ""
+                        image = "", name = "", author = "", description = "", price = "", condition ="", genre =""
                     ))
                 },
                 shape = RoundedCornerShape(36.dp),
