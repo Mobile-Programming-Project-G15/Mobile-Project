@@ -1,5 +1,6 @@
 package com.example.project
 
+import android.graphics.Paint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -8,8 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -159,7 +162,9 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                             var expanded by remember { mutableStateOf(false)}
 
                             if (expanded){
-                                Column(horizontalAlignment = CenterHorizontally) {
+                                Column(horizontalAlignment = Start,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
                                     Row {
                                         IconButton(onClick = {expanded = false}) {
                                             Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
@@ -211,8 +216,12 @@ fun AddBooks(bookVM: BookViewModel) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(0.dp, 12.dp, 0.dp, 110.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = CenterHorizontally,
+
     ){
         OutlinedTextField(
             value = bookName,
