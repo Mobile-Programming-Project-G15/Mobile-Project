@@ -203,11 +203,11 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
 fun AddBooks(bookVM: BookViewModel) {
     var bookName by remember {mutableStateOf("")}
     var bookAuthor by remember {mutableStateOf("")}
-    var bookImage by remember {mutableStateOf("")}
     var bookPrice by remember {mutableStateOf("")}
     var bookCondition by remember {mutableStateOf("")}
     var bookGenre by remember {mutableStateOf("")}
     var bookDescription by remember {mutableStateOf("")}
+    val bookImage = "https://firebasestorage.googleapis.com/v0/b/mobile-project-g15.appspot.com/o/Images%2Fcover_sample.jpg?alt=media&token=94724fcc-1b32-40f0-ac7e-7de37015c3d1"
 
     Column(
         modifier = Modifier
@@ -250,14 +250,9 @@ fun AddBooks(bookVM: BookViewModel) {
             label = { Text(text = "Book Description") })
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedTextField(
-            value = bookImage,
-            onValueChange = { bookImage = it },
-            label = { Text(text = "Book Image") })
-        Spacer(modifier = Modifier.height(10.dp))
-
         OutlinedButton(
-            onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookPrice, bookGenre, bookCondition , bookDescription, bookImage) ) }
+            onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookPrice,
+                bookGenre, bookCondition , bookDescription) ) }
         ) {
             Text(text = "Add Book")
         }
