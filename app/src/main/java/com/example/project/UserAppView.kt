@@ -100,8 +100,9 @@ fun Search(textVal: MutableState<TextFieldValue>) {
 }
 
 @Composable
-
 fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
+
+    var matchedBooks by remember { mutableStateOf(listOf<Book>())}
 
     Column(
         modifier = Modifier
@@ -110,95 +111,190 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
         horizontalAlignment = CenterHorizontally
 
     ) {
-        bookVM.books.forEach {
-            Column(modifier = Modifier
-                .padding(16.dp, 6.dp, 12.dp, 16.dp),
-                horizontalAlignment = CenterHorizontally,
-            ) {
-                Card(modifier = Modifier
-                    .fillMaxWidth(),
-                    elevation = 8.dp
+        var searchText = textVal.value.text
+        if(searchText.isNotEmpty()) {
+            val booksFromSearch = bookVM.books.filter {
+                it.name.contains(searchText, true)
+            }
+            matchedBooks = booksFromSearch.toMutableList()
+            matchedBooks.forEach {
+                Column(modifier = Modifier
+                    .padding(16.dp, 6.dp, 12.dp, 16.dp),
+                    horizontalAlignment = CenterHorizontally,
                 ) {
-                Column {
-                    Row(verticalAlignment = CenterVertically) {
-                        AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                            .padding(12.dp, 12.dp, 12.dp, 0.dp)
-                            .width(60.dp)
-                        )
-                        Column(verticalArrangement = Arrangement.Center) {
-                            Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                            Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-                            Text(text = it.price, color= Color.Black, fontSize = 16.sp)
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp, 6.dp, 12.dp, 2.dp),
-                            horizontalArrangement = Arrangement.End)
-                        {
-                            Button(
-                                onClick = {
-                                    bookVM.addReservation(Book(
-                                        name = it.name, author = it.author, image = it.image,
-                                        price = it.price, genre = it.genre,
-                                        condition = it.condition,description = it.description
-                                    ))
-                                },
-                                modifier= Modifier.size(50.dp),
-                                shape = CircleShape,
-                            ) {
+                    Card(modifier = Modifier
+                        .fillMaxWidth(),
+                        elevation = 8.dp
+                    ) {
+                        Column {
+                            Row(verticalAlignment = CenterVertically) {
+                                AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                                    .padding(12.dp, 12.dp, 12.dp, 0.dp)
+                                    .width(60.dp)
+                                )
+                                Column(verticalArrangement = Arrangement.Center) {
+                                    Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                                    Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                                    Text(text = it.price, color= Color.Black, fontSize = 16.sp)
+                                }
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(12.dp, 6.dp, 12.dp, 2.dp),
+                                    horizontalArrangement = Arrangement.End)
+                                {
+                                    Button(
+                                        onClick = {
+                                            bookVM.addReservation(Book(
+                                                name = it.name, author = it.author, image = it.image,
+                                                price = it.price, genre = it.genre,
+                                                condition = it.condition,description = it.description
+                                            ))
+                                        },
+                                        modifier= Modifier.size(50.dp),
+                                        shape = CircleShape,
+                                    ) {
 
-                                Icon(
-                                    painter = painterResource(id = R.drawable.outline_add_24),
-                                    contentDescription = "Add to reservations",
-                                    modifier = Modifier .fillMaxWidth() )
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.outline_add_24),
+                                            contentDescription = "Add to reservations",
+                                            modifier = Modifier .fillMaxWidth() )
+                                    }
+                                }
                             }
-                        }
-                    }
-                        Row(verticalAlignment = CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier .fillMaxWidth(),
-                                ) {
-                            var expanded by remember { mutableStateOf(false)}
+                            Row(verticalAlignment = CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier .fillMaxWidth(),
+                            ) {
+                                var expanded by remember { mutableStateOf(false)}
 
-                            if (expanded){
-                                Column(horizontalAlignment = Start,
-                                modifier = Modifier.fillMaxWidth()) {
+                                if (expanded){
+                                    Column(horizontalAlignment = Start,
+                                        modifier = Modifier.fillMaxWidth()) {
+                                        Row {
+                                            IconButton(onClick = {expanded = false}) {
+                                                Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
+                                            }
+                                        }
+                                        Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+                                            Row(modifier = Modifier.padding(4.dp)) {
+                                                Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                                Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
+                                            }
+                                            Row(modifier = Modifier.padding(4.dp)) {
+                                                Text(text = "Condition: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                                Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
+                                            }
+                                            Row(modifier = Modifier.padding(4.dp)) {
+                                                Text(text = "Description: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                            }
+                                            Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
+
+                                        }
+                                    }
+                                } else {
                                     Row {
-                                        IconButton(onClick = {expanded = false}) {
-                                            Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
+                                        IconButton(onClick = {expanded = true}) {
+                                            Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
                                         }
                                     }
-                                    Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
-                                        Row(modifier = Modifier.padding(4.dp)) {
-                                            Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                                            Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
-                                        }
-                                        Row(modifier = Modifier.padding(4.dp)) {
-                                            Text(text = "Condition: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                                            Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
-                                        }
-                                        Row(modifier = Modifier.padding(4.dp)) {
-                                            Text(text = "Description: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                                        }
-                                        Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
-
-                                    }
-                                }
-                            } else {
-                                Row {
-                                    IconButton(onClick = {expanded = true}) {
-                                        Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
-                                }
                                 }
                             }
                         }
                     }
                 }
             }
+        } else {
+            bookVM.books.forEach {
+                Column(modifier = Modifier
+                    .padding(16.dp, 6.dp, 12.dp, 16.dp),
+                    horizontalAlignment = CenterHorizontally,
+                ) {
+                    Card(modifier = Modifier
+                        .fillMaxWidth(),
+                        elevation = 8.dp
+                    ) {
+                        Column {
+                            Row(verticalAlignment = CenterVertically) {
+                                AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
+                                    .padding(12.dp, 12.dp, 12.dp, 0.dp)
+                                    .width(60.dp)
+                                )
+                                Column(verticalArrangement = Arrangement.Center) {
+                                    Text(text = it.name, color = Color.Black, fontSize = 16.sp)
+                                    Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
+                                    Text(text = it.price, color= Color.Black, fontSize = 16.sp)
+                                }
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(12.dp, 6.dp, 12.dp, 2.dp),
+                                    horizontalArrangement = Arrangement.End)
+                                {
+                                    Button(
+                                        onClick = {
+                                            bookVM.addReservation(Book(
+                                                name = it.name, author = it.author, image = it.image,
+                                                price = it.price, genre = it.genre,
+                                                condition = it.condition,description = it.description
+                                            ))
+                                        },
+                                        modifier= Modifier.size(50.dp),
+                                        shape = CircleShape,
+                                    ) {
 
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.outline_add_24),
+                                            contentDescription = "Add to reservations",
+                                            modifier = Modifier .fillMaxWidth() )
+                                    }
+                                }
+                            }
+                            Row(verticalAlignment = CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier .fillMaxWidth(),
+                            ) {
+                                var expanded by remember { mutableStateOf(false)}
+
+                                if (expanded){
+                                    Column(horizontalAlignment = Start,
+                                        modifier = Modifier.fillMaxWidth()) {
+                                        Row {
+                                            IconButton(onClick = {expanded = false}) {
+                                                Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
+                                            }
+                                        }
+                                        Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+                                            Row(modifier = Modifier.padding(4.dp)) {
+                                                Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                                Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
+                                            }
+                                            Row(modifier = Modifier.padding(4.dp)) {
+                                                Text(text = "Condition: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                                Text(text = it.condition,  color = Color.DarkGray, fontSize = 12.sp)
+                                            }
+                                            Row(modifier = Modifier.padding(4.dp)) {
+                                                Text(text = "Description: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                            }
+                                            Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
+
+                                        }
+                                    }
+                                } else {
+                                    Row {
+                                        IconButton(onClick = {expanded = true}) {
+                                            Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            Spacer(modifier = Modifier.height(30.dp))
         }
-        Spacer(modifier = Modifier.height(30.dp))
     }
 }
 

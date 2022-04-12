@@ -54,4 +54,8 @@ class BookViewModel: ViewModel() {
                 books.add(Book(book.name, book.author, book.image, book.price, book.genre, book.condition ,book.description))
             }
     }
+
+    fun deleteBookByAdmin(book: Book) {
+        /* delete book from firebase */
+    }
 }
