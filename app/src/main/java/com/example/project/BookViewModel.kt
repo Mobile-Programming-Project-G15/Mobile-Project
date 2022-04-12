@@ -38,7 +38,6 @@ class BookViewModel: ViewModel() {
     fun deleteReservation(book: Book) {
     isReserved.value = false
     reservedBooks.remove(book)
-
     }
 
     fun confirmReservation(book: Book) {

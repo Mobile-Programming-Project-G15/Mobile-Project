@@ -57,66 +57,6 @@ fun MainScaffoldView(userVM: UserViewModel) {
 }
 
 @Composable
-fun ExpandableCard(title: String, body: String) {
-    var expanded by remember { mutableStateOf(false)}
-
-    Card{
-        Column{
-            Text(text = title)
-            //Content
-            if(expanded) {
-                Text(text = body)
-                IconButton(onClick = {expanded = false}) {
-                    Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse")
-                }
-            } else {
-                IconButton(onClick = {expanded = true}) {
-                    Icon(painter = painterResource(id = R.drawable.outline_expand_more_black_18), contentDescription = "Expand")
-
-                }
-            }
-        }
-    }
-
-/*
-    Card(modifier = Modifier.fillMaxWidth(),
-        elevation = 8.dp
-    ) {
-        Row(verticalAlignment = CenterVertically) {
-            AsyncImage(model = it.image, contentDescription = "", modifier = Modifier
-                .padding(12.dp)
-                .width(60.dp)
-            )
-            Column(verticalArrangement = Arrangement.Center) {
-                Text(text = it.name, color = Color.Black, fontSize = 16.sp)
-                Text(text = it.author, color= Color.DarkGray, fontSize = 12.sp)
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
-                horizontalArrangement = Arrangement.End){
-                Button(
-                    onClick = {
-                        bookVM.addReservation(Book(
-                            name = it.name, author = it.author, image = it.image
-                        ))
-                    },
-                    modifier= Modifier.size(50.dp),
-                    shape = CircleShape,
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.outline_add_24),
-                        contentDescription = "Add to reservations",
-                        modifier = Modifier .fillMaxWidth() )
-                }
-            }
-        }
-    }
- */
-}
-
-@Composable
 fun TopBarView() {
     val userVM = viewModel<UserViewModel>()
 
@@ -218,7 +158,6 @@ fun LoginView(userVM: UserViewModel, navController: NavHostController) {
             .padding(38.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-
     ) {
 
         SPRLogo()
