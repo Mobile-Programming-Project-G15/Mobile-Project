@@ -211,8 +211,12 @@ fun AddBooks(bookVM: BookViewModel) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(0.dp, 12.dp, 0.dp, 110.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = CenterHorizontally,
+
     ){
         OutlinedTextField(
             value = bookName,
