@@ -7,8 +7,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class UserViewModel: ViewModel() {
-    var username = mutableStateOf("")
-    var isAdmin = mutableStateOf<Boolean>(false)
+    var username = mutableStateOf("test")
+    var isAdmin = mutableStateOf<Boolean>(true)
     
     fun createUser( emailRegister: String, pwRegister: String) {
         Firebase.auth
