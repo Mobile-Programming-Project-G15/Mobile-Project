@@ -207,7 +207,7 @@ fun AddBooks(bookVM: BookViewModel) {
     var bookCondition by remember {mutableStateOf("")}
     var bookGenre by remember {mutableStateOf("")}
     var bookDescription by remember {mutableStateOf("")}
-    val bookImage = "https://firebasestorage.googleapis.com/v0/b/mobile-project-g15.appspot.com/o/Images%2Fcover_sample.jpg?alt=media&token=94724fcc-1b32-40f0-ac7e-7de37015c3d1"
+    val bookImage = "https://firebasestorage.googleapis.com/v0/b/mobile-project-g15.appspot.com/o/Images%2Fbook_Image.png?alt=media&token=2f04cc71-2bca-4e46-96aa-b48e955850fd"
 
     Column(
         modifier = Modifier
