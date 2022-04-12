@@ -4,6 +4,7 @@ import android.graphics.Paint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -217,7 +219,6 @@ fun AddBooks(bookVM: BookViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 12.dp, 0.dp, 110.dp)
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = CenterHorizontally,
@@ -226,43 +227,57 @@ fun AddBooks(bookVM: BookViewModel) {
         OutlinedTextField(
             value = bookName,
             onValueChange = { bookName = it },
-            label = { Text(text = "Book Name") })
+            label = { Text(text = "Book Name") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookAuthor,
             onValueChange = { bookAuthor = it },
-            label = { Text(text = "Book Author") })
+            label = { Text(text = "Book Author") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookPrice,
             onValueChange = { bookPrice = it },
-            label = { Text(text = "Book Price") })
+            label = { Text(text = "Book Price") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookGenre,
             onValueChange = { bookGenre = it },
-            label = { Text(text = "Book Genre") })
+            label = { Text(text = "Book Genre") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookCondition,
             onValueChange = { bookCondition = it },
-            label = { Text(text = "Book Condition") })
+            label = { Text(text = "Book Condition") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookDescription,
             onValueChange = { bookDescription = it },
-            label = { Text(text = "Book Description") })
+            label = { Text(text = "Book Description") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedButton(
+        Button(
             onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookPrice,
-                bookGenre, bookCondition , bookDescription) ) }
-        ) {
+                bookGenre, bookCondition , bookDescription) )
+            },             modifier = Modifier.clip(
+                    RoundedCornerShape(50),
+        ) ) {
             Text(text = "Add Book")
         }
     }
