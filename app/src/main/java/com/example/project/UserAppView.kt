@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
@@ -96,7 +95,6 @@ fun Search(textVal: MutableState<TextFieldValue>) {
             unfocusedIndicatorColor = Color.Transparent,
         )
     )
-
 }
 
 @Composable
