@@ -1,17 +1,22 @@
 package com.example.project
 
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -169,14 +174,19 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-                                    Column(horizontalAlignment = Start,
-                                        modifier = Modifier.fillMaxWidth()) {
-                                        Row {
-                                            IconButton(onClick = {expanded = false}) {
-                                                Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
-                                            }
+
+                                    Row(horizontalArrangement = Arrangement.Center,
+                                        modifier = Modifier .fillMaxWidth()) {
+                                        IconButton(onClick = {expanded = false}) {
+                                            Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
                                         }
-                                        Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+                                    }
+
+
+
+                                        Column(horizontalAlignment = Start,
+                                            modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+
                                             Row(modifier = Modifier.padding(4.dp)) {
                                                 Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                                                 Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
@@ -191,7 +201,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                             Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
 
                                         }
-                                    }
+
                                 } else {
                                     Row {
                                         IconButton(onClick = {expanded = true}) {
@@ -245,6 +255,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                         elevation = null
 
                                     ) {
+
                                         Icon(
                                             painter = painterResource(id = R.drawable.outline_clear_white_18),
                                             contentDescription = "Delete",
@@ -260,9 +271,11 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-                                    Column(horizontalAlignment = Start,
+                                    Column(
                                         modifier = Modifier.fillMaxWidth()) {
-                                        Row {
+                                        Row(verticalAlignment = CenterVertically,
+                                            horizontalArrangement = Arrangement.Center,
+                                            modifier = Modifier .fillMaxWidth()) {
                                             IconButton(onClick = {expanded = false}) {
                                                 Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                             }
@@ -311,12 +324,16 @@ fun AddBooks(bookVM: BookViewModel) {
     var bookGenre by remember {mutableStateOf("")}
     var bookDescription by remember {mutableStateOf("")}
     val bookImage = "https://firebasestorage.googleapis.com/v0/b/mobile-project-g15.appspot.com/o/Images%2Fbook_Image.png?alt=media&token=2f04cc71-2bca-4e46-96aa-b48e955850fd"
+    val scrollState = rememberScrollState()
 
     Column(
-        modifier = Modifier
+        modifier = Modifier.scrollable(
+            state = scrollState,
+            orientation = Orientation.Vertical
+        )
             .fillMaxWidth()
-            .padding(0.dp, 12.dp, 0.dp, 110.dp)
             .verticalScroll(rememberScrollState()),
+
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = CenterHorizontally,
 
@@ -324,45 +341,60 @@ fun AddBooks(bookVM: BookViewModel) {
         OutlinedTextField(
             value = bookName,
             onValueChange = { bookName = it },
-            label = { Text(text = "Book Name") })
+            label = { Text(text = "Book Name") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookAuthor,
             onValueChange = { bookAuthor = it },
-            label = { Text(text = "Book Author") })
+            label = { Text(text = "Book Author") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookPrice,
             onValueChange = { bookPrice = it },
-            label = { Text(text = "Book Price") })
+            label = { Text(text = "Book Price") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookGenre,
             onValueChange = { bookGenre = it },
-            label = { Text(text = "Book Genre") })
+            label = { Text(text = "Book Genre") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookCondition,
             onValueChange = { bookCondition = it },
-            label = { Text(text = "Book Condition") })
+            label = { Text(text = "Book Condition") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = bookDescription,
             onValueChange = { bookDescription = it },
-            label = { Text(text = "Book Description") })
+            label = { Text(text = "Book Description") },
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.padding(12.dp))
         Spacer(modifier = Modifier.height(10.dp))
 
-        OutlinedButton(
+        Button(
             onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookPrice,
-                bookGenre, bookCondition , bookDescription) ) }
+                bookGenre, bookCondition , bookDescription) ) },
+                    modifier = Modifier.clip(
+                    RoundedCornerShape(50)),
         ) {
             Text(text = "Add Book")
         }
+        Spacer(modifier = Modifier.height(80.dp))
     }
 }
 
