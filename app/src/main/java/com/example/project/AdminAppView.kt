@@ -2,6 +2,8 @@ package com.example.project
 
 import android.graphics.Paint
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -315,11 +317,16 @@ fun AddBooks(bookVM: BookViewModel) {
     var bookGenre by remember {mutableStateOf("")}
     var bookDescription by remember {mutableStateOf("")}
     val bookImage = "https://firebasestorage.googleapis.com/v0/b/mobile-project-g15.appspot.com/o/Images%2Fbook_Image.png?alt=media&token=2f04cc71-2bca-4e46-96aa-b48e955850fd"
+    val scrollState = rememberScrollState()
 
     Column(
-        modifier = Modifier
+        modifier = Modifier.scrollable(
+            state = scrollState,
+            orientation = Orientation.Vertical
+        )
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
+
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = CenterHorizontally,
 
@@ -376,9 +383,10 @@ fun AddBooks(bookVM: BookViewModel) {
             onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookPrice,
                 bookGenre, bookCondition , bookDescription) )
             },             modifier = Modifier.clip(
-                    RoundedCornerShape(50),
-        ) ) {
+                    RoundedCornerShape(50)),
+        ) {
             Text(text = "Add Book")
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
