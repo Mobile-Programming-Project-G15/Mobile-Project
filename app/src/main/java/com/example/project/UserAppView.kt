@@ -151,12 +151,15 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                         },
                                         modifier= Modifier.size(50.dp),
                                         shape = CircleShape,
+                                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                                        elevation = null
                                     ) {
 
                                         Icon(
                                             painter = painterResource(id = R.drawable.outline_add_24),
                                             contentDescription = "Add to reservations",
-                                            modifier = Modifier .fillMaxWidth() )
+                                            modifier = Modifier .fillMaxWidth()
+                                        )
                                     }
                                 }
                             }
@@ -167,9 +170,11 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-                                    Column(horizontalAlignment = Start,
+                                    Column(
                                         modifier = Modifier.fillMaxWidth()) {
-                                        Row {
+                                        Row(verticalAlignment = CenterVertically,
+                                            horizontalArrangement = Arrangement.Center,
+                                            modifier = Modifier .fillMaxWidth()) {
                                             IconButton(onClick = {expanded = false}) {
                                                 Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                             }
@@ -255,9 +260,11 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-                                    Column(horizontalAlignment = Start,
+                                    Column(
                                         modifier = Modifier.fillMaxWidth()) {
-                                        Row {
+                                        Row(verticalAlignment = CenterVertically,
+                                            horizontalArrangement = Arrangement.Center,
+                                            modifier = Modifier .fillMaxWidth()) {
                                             IconButton(onClick = {expanded = false}) {
                                                 Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                             }

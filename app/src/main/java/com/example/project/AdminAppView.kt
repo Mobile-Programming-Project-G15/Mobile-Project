@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
@@ -173,14 +174,19 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-                                    Column(horizontalAlignment = Start,
-                                        modifier = Modifier.fillMaxWidth()) {
-                                        Row {
-                                            IconButton(onClick = {expanded = false}) {
-                                                Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
-                                            }
+
+                                    Row(horizontalArrangement = Arrangement.Center,
+                                        modifier = Modifier .fillMaxWidth()) {
+                                        IconButton(onClick = {expanded = false}) {
+                                            Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
                                         }
-                                        Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+                                    }
+
+
+
+                                        Column(horizontalAlignment = Start,
+                                            modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
+
                                             Row(modifier = Modifier.padding(4.dp)) {
                                                 Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                                                 Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
@@ -195,7 +201,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                             Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
 
                                         }
-                                    }
+
                                 } else {
                                     Row {
                                         IconButton(onClick = {expanded = true}) {
@@ -249,6 +255,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                         elevation = null
 
                                     ) {
+
                                         Icon(
                                             painter = painterResource(id = R.drawable.outline_clear_white_18),
                                             contentDescription = "Delete",
@@ -264,9 +271,11 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-                                    Column(horizontalAlignment = Start,
+                                    Column(
                                         modifier = Modifier.fillMaxWidth()) {
-                                        Row {
+                                        Row(verticalAlignment = CenterVertically,
+                                            horizontalArrangement = Arrangement.Center,
+                                            modifier = Modifier .fillMaxWidth()) {
                                             IconButton(onClick = {expanded = false}) {
                                                 Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
                                             }
@@ -379,13 +388,13 @@ fun AddBooks(bookVM: BookViewModel) {
 
         Button(
             onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookPrice,
-                bookGenre, bookCondition , bookDescription) )
-            },             modifier = Modifier.clip(
+                bookGenre, bookCondition , bookDescription) ) },
+                    modifier = Modifier.clip(
                     RoundedCornerShape(50)),
         ) {
             Text(text = "Add Book")
-            Spacer(modifier = Modifier.height(10.dp))
         }
+        Spacer(modifier = Modifier.height(80.dp))
     }
 }
 
