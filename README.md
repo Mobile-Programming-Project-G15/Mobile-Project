@@ -5,7 +5,10 @@ The primary idea of this project is to have a platform that enables second-hand 
 The designs were made in Figma. We based the project on jetpack compose and the coding language is Kotlin. 
 Firebase authentication, Firebase firestore database and Firebase storage were used for storing user and item data and displaying images. 
 
-User can signup and login using username and password. 
+User can signup and login using username and password. Below is the examples of users:
+
+![image](https://user-images.githubusercontent.com/78967184/164460162-f315f20e-1d3e-4d1e-bb97-e28876e4bb26.png)
+
 The books' information are stored in Firebase firestore. Images are stored in Firebase storage and their URL is saved in firestore document fields for each book. 
 An example is displayed below. 
 
