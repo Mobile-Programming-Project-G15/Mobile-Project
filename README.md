@@ -23,13 +23,10 @@ Searching items by name and list of reserved items, which works as sort of a "sh
 ![image](https://user-images.githubusercontent.com/67232776/164700572-156b7fdf-2b0b-42f5-b7be-3f303a3698cf.png)
 
 
-Expanded view of an item from the "administrator" side of our application:
+Expanded view of an item from the "administrator" side of our application and the admin side view for adding items:
 
-![image](https://user-images.githubusercontent.com/67232776/164683637-598f8946-813b-450e-a4dd-fcf5aacae3cc.png)
+![image](https://user-images.githubusercontent.com/67232776/164700831-51076d94-7b86-4b3b-8fd1-01e5f0efdab6.png)
 
-Admin side view for adding items:
-
-![image](https://user-images.githubusercontent.com/67232776/164683680-e764eae4-89d8-4c1a-859a-d1acfee67949.png)
 
 Application poster:
 https://oamk-my.sharepoint.com/personal/c0fasa00_students_oamk_fi/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fc0fasa00%5Fstudents%5Foamk%5Ffi%2FDocuments%2FBusiness%20Implementation%20%2D%20G15%2FPoster%5FG15%2Epdf&parent=%2Fpersonal%2Fc0fasa00%5Fstudents%5Foamk%5Ffi%2FDocuments%2FBusiness%20Implementation%20%2D%20G15
