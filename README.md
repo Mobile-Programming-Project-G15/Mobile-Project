@@ -17,10 +17,7 @@ An example is displayed below.
 
 This is a photo of the login/sign up view of an imaginary company that we adapted our application for in the light of our business implementation course. The logos involved are just examples:
 
-![image](https://user-images.githubusercontent.com/67232776/164675420-5acf2217-0a45-414c-92d9-515ab6a04ae2.png)
-![image](https://user-images.githubusercontent.com/67232776/164675468-8ed4292a-4025-4afc-bc11-e2641f2f047b.png)
-
-Main view for scrolling and searching items from the inventory:
+![image](https://user-images.githubusercontent.com/67232776/164679853-b28284f9-7181-471d-996a-8ff6423f6612.png)
 
 ![image](https://user-images.githubusercontent.com/67232776/164678374-5f86939e-508a-4d9e-91cd-388846d5efa0.png)
 ![image](https://user-images.githubusercontent.com/67232776/164675925-0edc742c-6c3d-4042-8edb-7a46fc746c43.png)
