@@ -33,3 +33,6 @@ Expanded view of an item from the "administrator" side of our application:
 Admin side view for adding items:
 
 ![image](https://user-images.githubusercontent.com/67232776/164683680-e764eae4-89d8-4c1a-859a-d1acfee67949.png)
+
+Application poster:
+https://oamk-my.sharepoint.com/personal/c0fasa00_students_oamk_fi/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fc0fasa00%5Fstudents%5Foamk%5Ffi%2FDocuments%2FBusiness%20Implementation%20%2D%20G15%2FPoster%5FG15%2Epdf&parent=%2Fpersonal%2Fc0fasa00%5Fstudents%5Foamk%5Ffi%2FDocuments%2FBusiness%20Implementation%20%2D%20G15
