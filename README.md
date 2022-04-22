@@ -20,7 +20,7 @@ This is a photo of the login/sign up view of an imaginary company that we adapte
 
 Searching items by name and list of reserved items, which works as sort of a "shopping cart":
 
-![image](https://user-images.githubusercontent.com/67232776/164700572-156b7fdf-2b0b-42f5-b7be-3f303a3698cf.png)
+![image](https://user-images.githubusercontent.com/67232776/164701099-eca8457c-fe01-4c24-aa78-e65a8a7f7625.png)
 
 
 Expanded view of an item from the "administrator" side of our application and the admin side view for adding items:
