@@ -18,13 +18,10 @@ This is a photo of the login/sign up view of an imaginary company that we adapte
 
 ![image](https://user-images.githubusercontent.com/67232776/164700331-e2ad18f2-00ee-4829-b14c-9e40286502fc.png)
 
-Searching items by name:
+Searching items by name and list of reserved items, which works as sort of a "shopping cart":
 
-![image](https://user-images.githubusercontent.com/67232776/164683464-d4ec0a8c-ebbe-4df2-8e5c-4f6ba27612a3.png)
+![image](https://user-images.githubusercontent.com/67232776/164700572-156b7fdf-2b0b-42f5-b7be-3f303a3698cf.png)
 
-List of reserved items, this works as sort of a "shopping cart":
-
-![image](https://user-images.githubusercontent.com/67232776/164683586-3d1aacdb-6d5e-48a5-a6a4-9c6a87da7d2f.png)
 
 Expanded view of an item from the "administrator" side of our application:
 
