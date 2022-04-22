@@ -17,7 +17,7 @@ An example is displayed below.
 
 This is a photo of the login/sign up view of an imaginary company that we adapted our application for in the light of our business implementation course. The logos involved are just examples:
 
-![image](https://user-images.githubusercontent.com/67232776/164682774-bfefc861-9194-46c2-86c0-40100a867af9.png)
+![image](https://user-images.githubusercontent.com/67232776/164683031-1b55b4ab-183c-434f-9f0b-1fadd3e02337.png)
 
 ![image](https://user-images.githubusercontent.com/67232776/164678374-5f86939e-508a-4d9e-91cd-388846d5efa0.png)
 ![image](https://user-images.githubusercontent.com/67232776/164675925-0edc742c-6c3d-4042-8edb-7a46fc746c43.png)
