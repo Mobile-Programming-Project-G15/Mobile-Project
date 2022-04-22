@@ -22,6 +22,7 @@ This is a photo of the login/sign up view of an imaginary company that we adapte
 
 Main view for scrolling and searching items from the inventory:
 
+![image](https://user-images.githubusercontent.com/67232776/164678374-5f86939e-508a-4d9e-91cd-388846d5efa0.png)
 ![image](https://user-images.githubusercontent.com/67232776/164675925-0edc742c-6c3d-4042-8edb-7a46fc746c43.png)
 
 List of reserved items, this works as sort of a "shopping cart":
