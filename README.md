@@ -19,17 +19,17 @@ This is a photo of the login/sign up view of an imaginary company that we adapte
 
 ![image](https://user-images.githubusercontent.com/67232776/164683031-1b55b4ab-183c-434f-9f0b-1fadd3e02337.png)
 
-![image](https://user-images.githubusercontent.com/67232776/164678374-5f86939e-508a-4d9e-91cd-388846d5efa0.png)
-![image](https://user-images.githubusercontent.com/67232776/164675925-0edc742c-6c3d-4042-8edb-7a46fc746c43.png)
+![image](https://user-images.githubusercontent.com/67232776/164683333-481161de-0a02-4342-a29f-ecfe98d29a7d.png)
+![image](https://user-images.githubusercontent.com/67232776/164683464-d4ec0a8c-ebbe-4df2-8e5c-4f6ba27612a3.png)
 
 List of reserved items, this works as sort of a "shopping cart":
 
-![image](https://user-images.githubusercontent.com/67232776/164676085-6ae47629-3035-402f-8ed6-3cde61902675.png)
+![image](https://user-images.githubusercontent.com/67232776/164683586-3d1aacdb-6d5e-48a5-a6a4-9c6a87da7d2f.png)
 
 Expanded view of an item from the "administrator" side of our application:
 
-![image](https://user-images.githubusercontent.com/67232776/164676509-1489285a-b0fd-4bfa-b24f-3f487aeecaef.png)
+![image](https://user-images.githubusercontent.com/67232776/164683637-598f8946-813b-450e-a4dd-fcf5aacae3cc.png)
 
 Admin side view for adding items:
 
-![image](https://user-images.githubusercontent.com/67232776/164676729-cd59513c-529e-482e-b064-a88063aaa68d.png)
+![image](https://user-images.githubusercontent.com/67232776/164683680-e764eae4-89d8-4c1a-859a-d1acfee67949.png)
