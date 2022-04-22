@@ -18,7 +18,6 @@ This is a photo of the login/sign up view of an imaginary company that we adapte
 
 ![image](https://user-images.githubusercontent.com/67232776/164683031-1b55b4ab-183c-434f-9f0b-1fadd3e02337.png)
 
-![image](https://user-images.githubusercontent.com/67232776/164683333-481161de-0a02-4342-a29f-ecfe98d29a7d.png)
 ![image](https://user-images.githubusercontent.com/67232776/164683464-d4ec0a8c-ebbe-4df2-8e5c-4f6ba27612a3.png)
 
 List of reserved items, this works as sort of a "shopping cart":
