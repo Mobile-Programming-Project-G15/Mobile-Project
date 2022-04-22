@@ -16,7 +16,7 @@ An example is displayed below.
 
 This is a photo of the login/sign up view of an imaginary company that we adapted our application for in the light of our business implementation course. The logos involved are just examples:
 
-![image](https://user-images.githubusercontent.com/67232776/164683031-1b55b4ab-183c-434f-9f0b-1fadd3e02337.png)
+![image](https://user-images.githubusercontent.com/67232776/164695999-a1b7d1d6-b105-407f-8bb1-210dd95418f5.png)
 
 Searching items by name:
 
