@@ -13,7 +13,6 @@ The books' information are stored in Firebase firestore. Images are stored in Fi
 An example is displayed below. 
 
 ![image](https://user-images.githubusercontent.com/78967184/164458706-e5c3d8ec-1e0c-4cb6-8ac7-6a582dd13ec1.png)
-![image](https://user-images.githubusercontent.com/78967184/164516320-2b5c4d74-e55f-40d1-af03-4acdd4f3dfa9.png)
 
 This is a photo of the login/sign up view of an imaginary company that we adapted our application for in the light of our business implementation course. The logos involved are just examples:
 
