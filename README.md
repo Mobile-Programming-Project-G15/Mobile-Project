@@ -29,4 +29,4 @@ Expanded view of an item from the "administrator" side of our application and th
 
 
 Application poster:
-https://oamk-my.sharepoint.com/personal/c0fasa00_students_oamk_fi/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fc0fasa00%5Fstudents%5Foamk%5Ffi%2FDocuments%2FBusiness%20Implementation%20%2D%20G15%2FPoster%5FG15%2Epdf&parent=%2Fpersonal%2Fc0fasa00%5Fstudents%5Foamk%5Ffi%2FDocuments%2FBusiness%20Implementation%20%2D%20G15
+https://oamk-my.sharepoint.com/:b:/g/personal/c0fasa00_students_oamk_fi/ESCpXsZFe5JArKh3nhyGPNYBTamhnuhJSS8EyLzrrVeyqw?e=x4BpS7
