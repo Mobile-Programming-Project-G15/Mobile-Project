@@ -1,5 +1,6 @@
 package com.example.project
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -141,6 +143,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                         .padding(12.dp, 6.dp, 12.dp, 2.dp),
                                     horizontalArrangement = Arrangement.End)
                                 {
+                                    val context = LocalContext.current
                                     Button(
                                         onClick = {
                                             bookVM.addReservation(Book(
@@ -148,11 +151,14 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                                 price = it.price, genre = it.genre,
                                                 condition = it.condition,description = it.description
                                             ))
+                                            Toast.makeText(
+                                                context,
+                                                "Added to the reservation list",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         },
                                         modifier= Modifier.size(50.dp),
                                         shape = CircleShape,
-                                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                                        elevation = null
                                     ) {
 
                                         Icon(
@@ -234,6 +240,7 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                         .padding(12.dp, 6.dp, 12.dp, 2.dp),
                                     horizontalArrangement = Arrangement.End)
                                 {
+                                    val context = LocalContext.current
                                     Button(
                                         onClick = {
                                             bookVM.addReservation(Book(
@@ -241,6 +248,11 @@ fun HomeView(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) {
                                                 price = it.price, genre = it.genre,
                                                 condition = it.condition,description = it.description
                                             ))
+                                            Toast.makeText(
+                                                 context,
+                                                "Added to the reservation list",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         },
                                         modifier= Modifier.size(50.dp),
                                         shape = CircleShape,
@@ -364,11 +376,17 @@ fun ReservationView(bookVM: BookViewModel) {
                     }
                 }
             }
+            val context = LocalContext.current
             Button(
                 onClick = {
                     bookVM.confirmReservation(Book(
                         image = "", name = "", author = "", description = "", price = "", condition ="", genre =""
                     ))
+                    Toast.makeText(
+                        context,
+                        "Reservation confirmed, Please pick up your order within the next three workdays.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 },
                 shape = RoundedCornerShape(36.dp),
                 modifier = Modifier.padding(12.dp),

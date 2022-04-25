@@ -1,5 +1,6 @@
 package com.example.project
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,12 +37,27 @@ class BookViewModel: ViewModel() {
     }
 
     fun deleteReservation(book: Book) {
-    isReserved.value = false
-    reservedBooks.remove(book)
+        isReserved.value = false
+
+        var foundIndex = -1
+
+        reservedBooks.forEachIndexed { index, it ->
+            if (book.name == it.name){
+                foundIndex = index
+                return
+            }
+        }
+
+        if (foundIndex > -1) {
+            reservedBooks.removeAt(foundIndex)
+        } else {
+            Log.d("Error", "Book not found")
+        }
     }
 
     fun confirmReservation(book: Book) {
-        //delete all items from the reservation list
+        isReserved.value = true
+        reservedBooks.removeAll(listOf(book))
     }
 
     fun addBookByAdmin(book: Book) {
@@ -55,6 +71,16 @@ class BookViewModel: ViewModel() {
     }
 
     fun deleteBookByAdmin(book: Book) {
-        /* delete book from firebase */
+        val db = FirebaseFirestore.getInstance()
+
+        books.forEachIndexed { index, it ->
+            if(book.name == it.name) {
+
+                db.collection("books").document()
+                    .get()
+                    .addOnSuccessListener { Log.d("tag", "deleted") }
+                    .addOnFailureListener { Log.d("tag", "delete does not work") }
+            }
+        }
     }
 }

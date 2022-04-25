@@ -94,7 +94,6 @@ fun SearchAdmin(textVal: MutableState<TextFieldValue>) {
             textColor = Color.DarkGray,
             cursorColor = Color.Red,
             backgroundColor = Color.White,
-            trailingIconColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
         )
@@ -174,19 +173,16 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                 var expanded by remember { mutableStateOf(false)}
 
                                 if (expanded){
-
-                                    Row(horizontalArrangement = Arrangement.Center,
-                                        modifier = Modifier .fillMaxWidth()) {
-                                        IconButton(onClick = {expanded = false}) {
-                                            Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Expand", modifier = Modifier.size(18.dp))
+                                    Column(
+                                        modifier = Modifier.fillMaxWidth()) {
+                                        Row(verticalAlignment = CenterVertically,
+                                            horizontalArrangement = Arrangement.Center,
+                                            modifier = Modifier .fillMaxWidth()) {
+                                            IconButton(onClick = {expanded = false}) {
+                                                Icon(painter = painterResource(id = R.drawable.outline_expand_less_black_18), contentDescription = "Collapse", modifier = Modifier.size(18.dp))
+                                            }
                                         }
-                                    }
-
-
-
-                                        Column(horizontalAlignment = Start,
-                                            modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
-
+                                        Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 12.dp)) {
                                             Row(modifier = Modifier.padding(4.dp)) {
                                                 Text(text = "Genre: ",  color = Color.DarkGray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                                                 Text(text = it.genre,  color = Color.DarkGray, fontSize = 12.sp)
@@ -201,7 +197,7 @@ fun HomeViewAdmin(bookVM: BookViewModel, textVal: MutableState<TextFieldValue>) 
                                             Text(text = it.description,  color = Color.DarkGray, fontSize = 12.sp, modifier = Modifier.padding(4.dp))
 
                                         }
-
+                                    }
                                 } else {
                                     Row {
                                         IconButton(onClick = {expanded = true}) {
@@ -338,54 +334,50 @@ fun AddBooks(bookVM: BookViewModel) {
         horizontalAlignment = CenterHorizontally,
 
     ){
+        Spacer(modifier = Modifier.height(15.dp))
         OutlinedTextField(
             value = bookName,
             onValueChange = { bookName = it },
             label = { Text(text = "Book Name") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(12.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+            modifier = Modifier.padding(5.dp))
 
         OutlinedTextField(
             value = bookAuthor,
             onValueChange = { bookAuthor = it },
             label = { Text(text = "Book Author") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(12.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+            modifier = Modifier.padding(5.dp))
 
         OutlinedTextField(
             value = bookPrice,
             onValueChange = { bookPrice = it },
             label = { Text(text = "Book Price") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(12.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+            modifier = Modifier.padding(5.dp))
 
         OutlinedTextField(
             value = bookGenre,
             onValueChange = { bookGenre = it },
             label = { Text(text = "Book Genre") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(12.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+            modifier = Modifier.padding(5.dp))
 
         OutlinedTextField(
             value = bookCondition,
             onValueChange = { bookCondition = it },
             label = { Text(text = "Book Condition") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(12.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+            modifier = Modifier.padding(5.dp))
 
         OutlinedTextField(
             value = bookDescription,
             onValueChange = { bookDescription = it },
             label = { Text(text = "Book Description") },
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(12.dp))
-        Spacer(modifier = Modifier.height(10.dp))
+            modifier = Modifier.padding(5.dp))
 
+        Spacer(modifier = Modifier.height(12.dp))
         Button(
             onClick = { bookVM.addBookByAdmin( Book(bookName, bookAuthor, bookImage, bookPrice,
                 bookGenre, bookCondition , bookDescription) ) },
